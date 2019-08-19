@@ -1,6 +1,7 @@
 import java.util.Vector;
 
 public class Personne extends Profil {
+    private int id;
     private String nom;
     private String prenom;
     private int age;
@@ -43,6 +44,7 @@ public class Personne extends Profil {
 
     public Personne(String _nom, String _prenom, int _age) {
         super();
+        id = super.getId();
         nom = _nom;
         prenom = _prenom;
         age = _age;
@@ -57,8 +59,8 @@ public class Personne extends Profil {
 
     @Override
     public void afficher() {
-        super.afficher();
-        System.out.println(ConsoleColor.textColor(ConsoleColor.BLUE, prenom + " " + nom) +
+        System.out.println("Profil numéro : " + id + "\n" +
+                ConsoleColor.textColor(ConsoleColor.BLUE, prenom + " " + nom) +
                 " a " + Integer.toString(age) +
                 " an" + (age > 1 ? "s" : "") +
                 " et pratique " + (sports.size() == 1 ? "le sport " : "les sports ") + ": ");

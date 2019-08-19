@@ -4,22 +4,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        ReseauSocial reseauSocial = new ReseauSocial();
-
-        reseauSocial.createPerson(new Personne("CALITRO", "Rael", 36));
-        reseauSocial.createPerson(new Personne("DUPONT", "Jean", 60));
-
-        reseauSocial.createSport(new Sport("cyclisme"));
-        reseauSocial.createSport(new Sport("alpinisme"));
-        reseauSocial.createSport(new Sport("athlétisme"));
-
-        reseauSocial.setPersonSport("CALITRO", "cyclisme");
-        reseauSocial.setPersonSport("CALITRO", "alpinisme");
-        reseauSocial.setPersonSport("CALITRO", "athlétisme");
-
-        reseauSocial.setPersonSport("Dupont", "athlétisme");
-        reseauSocial.setPersonSport("Dupont", "alpinisme");
-
         (new ReseauSocial()).afficher();
 
 //        Vector<Personne> personnes = new Vector<Personne>();
