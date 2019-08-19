@@ -1,8 +1,8 @@
 public class Profil {
-    protected int id;
+    protected static int id = 0;
 
-    public Profil(int _id) {
-        id = _id;
+    public Profil() {
+        id++;
     }
 
     public void afficher() {
