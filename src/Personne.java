@@ -50,12 +50,6 @@ public class Personne extends Profil {
         clubs = new Vector<Club>();
     }
 
-    public Personne(String _nom, String _prenom, int _age, Sport[] _sports) {
-        this(_nom, _prenom, _age);
-        sports = new Vector<Sport>();
-        clubs = new Vector<Club>();
-    }
-
     @Override
     public String toString() {
         return prenom + " " + nom;
