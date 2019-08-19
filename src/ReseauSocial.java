@@ -1,7 +1,12 @@
 public class ReseauSocial {
 
     public static void main(String[] args) {
-        Profil p = new Profil(1);
-        p.afficher();
+        Personne personne = new Personne(1, "CALITRO", "Rael", 36);
+        Sport sport = new Sport("Cyclisme");
+        Club club = new Club(1, "leVélo");
+        personne.afficher();
+        sport.afficher();
+        club.afficher();
     }
+
 }
