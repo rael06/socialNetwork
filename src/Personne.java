@@ -1,6 +1,8 @@
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.Hashtable;
 
-public class Personne extends Profil {
+public class Personne extends Profil implements Serializable {
     private int id;
     private String nom;
     private String prenom;
@@ -69,5 +71,20 @@ public class Personne extends Profil {
                 ConsoleColor.textColor(ConsoleColor.BLUE, prenom + " " + nom.toUpperCase()) +
                 " a " + Integer.toString(age) +
                 " an" + (age > 1 ? "s" : ""));
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+        out.writeObject(nom);
+        out.writeObject(prenom);
+        out.writeInt(age);
+        out.writeInt(id);
+        out.flush();
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+        nom = (String) in.readObject();
+        prenom = (String) in.readObject();
+        age = in.readInt();
+        id = in.readInt();
     }
 }

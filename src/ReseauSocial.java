@@ -1,13 +1,35 @@
+import java.io.Console;
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.Map;
 import java.util.Hashtable;
 
 
-public class ReseauSocial {
+public class ReseauSocial implements Serializable {
+
     private Hashtable<String, Personne> personnes = new Hashtable<>();
     private Hashtable<String, Sport> sports = new Hashtable<>();
     private Hashtable<String, Club> clubs = new Hashtable<>();
 
+    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+        out.writeObject(personnes);
+        out.writeObject(sports);
+        out.writeObject(clubs);
+        out.flush();
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+        System.out.println("coucou");
+        personnes = (Hashtable<String, Personne>) in.readObject();
+        sports = (Hashtable<String, Sport>) in.readObject();
+        clubs = (Hashtable<String, Club>) in.readObject();
+    }
+
     public ReseauSocial() {
+
+        personnes = new Hashtable<>();
+        sports = new Hashtable<>();
+        clubs = new Hashtable<>();
 
         //create persons
         createPerson(new Personne("CALITRO", "Rael", 36));
@@ -42,20 +64,19 @@ public class ReseauSocial {
         setPersonClub("Michu", "Youpi Sport");
     }
 
-    public void createPerson(Personne personne) {
+    private void createPerson(Personne personne) {
         personnes.put(personne.getNom(), personne);
     }
 
-    public void createSport(Sport sport) {
+    private void createSport(Sport sport) {
         sports.put(sport.getNom(), sport);
     }
 
-    public void createClub(Club club) {
+    private void createClub(Club club) {
         clubs.put(club.getNom(), club);
     }
 
-    public void setPersonClub(String personName, String clubName) {
-
+    private void setPersonClub(String personName, String clubName) {
         Personne personFound = null;
         Club clubFound = null;
 
@@ -85,7 +106,7 @@ public class ReseauSocial {
         */
     }
 
-    public void setPersonSport(String personName, String sportName) {
+    private void setPersonSport(String personName, String sportName) {
 
         Personne personFound = null;
         Sport sportFound = null;

@@ -1,9 +1,11 @@
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Hashtable;
 import java.util.Set;
 
-public class Club {
+public class Club implements Serializable {
 
     private String nom;
     private Hashtable<String, Personne> pratiquants = new Hashtable<>();
@@ -77,5 +79,14 @@ public class Club {
     @Override
     public String toString() {
         return nom;
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+        out.writeObject(nom);
+        out.flush();
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+        nom = (String) in.readObject();
     }
 }

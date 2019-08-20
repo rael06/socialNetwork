@@ -1,7 +1,9 @@
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.Map;
 import java.util.Hashtable;
 
-public class Sport {
+public class Sport implements Serializable {
 
     private String nom;
     private Personne pers;
@@ -48,4 +50,12 @@ public class Sport {
         return nom;
     }
 
+    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+        out.writeObject(nom);
+        out.flush();
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+        nom = (String) in.readObject();
+    }
 }
