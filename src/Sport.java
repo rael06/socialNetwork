@@ -1,10 +1,11 @@
-import java.util.*;
+import java.util.Map;
+import java.util.Hashtable;
 
 public class Sport {
 
     private String nom;
     private Personne pers;
-    private Vector<Personne> pratiquants;
+    private Map<String, Personne> pratiquants = new Hashtable<>();
 
     public String getNom() {
         return nom;
@@ -24,7 +25,6 @@ public class Sport {
 
     public Sport(String _nom) {
         nom = _nom;
-        pratiquants = new Vector<Personne>();
     }
 
     public void afficher() {
@@ -33,14 +33,14 @@ public class Sport {
             System.out.println("n'est pas pratiqué !");
         } else {
             System.out.println("est pratiqué par : ");
-            for (Personne pratiquant : pratiquants) {
-                System.out.println(ConsoleColor.textColor(ConsoleColor.BLUE, pratiquant.toString()));
+            for (Map.Entry<String, Personne> pratiquant : pratiquants.entrySet()) {
+                System.out.println(ConsoleColor.textColor(ConsoleColor.BLUE, pratiquant.getValue().toString()));
             }
         }
     }
 
     public void addPratiquant(Personne _pers) {
-        pratiquants.add(_pers);
+        pratiquants.put(_pers.getNom(), _pers);
     }
 
     @Override

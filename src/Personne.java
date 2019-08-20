@@ -1,12 +1,12 @@
-import java.util.Vector;
+import java.util.Hashtable;
 
 public class Personne extends Profil {
     private int id;
     private String nom;
     private String prenom;
     private int age;
-    private Vector<Sport> sports;
-    private Vector<Club> clubs;
+    private Hashtable<String, Sport> sports = new Hashtable<>();
+    private Hashtable<String, Club> clubs = new Hashtable<>();
 
     public String getNom() {
         return nom;
@@ -32,24 +32,30 @@ public class Personne extends Profil {
         this.age = age;
     }
 
+    public Hashtable<String, Sport> getSports() {
+        return sports;
+    }
+
     public void setSport(Sport sport) {
-        sports.add(sport);
+        sports.put(sport.getNom(), sport);
         sport.addPratiquant(this);
     }
 
+    public Hashtable<String, Club> getClubs() {
+        return clubs;
+    }
+
     public void setClub(Club club) {
-        clubs.add(club);
+        clubs.put(club.getNom(), club);
         club.addPratiquant(this);
     }
 
     public Personne(String _nom, String _prenom, int _age) {
         super();
-        id = super.getId();
+        id = Profil.getId();
         nom = _nom;
-        prenom = _prenom;
+        prenom = (_prenom.charAt(0) + "").toUpperCase() + _prenom.substring(1);
         age = _age;
-        sports = new Vector<Sport>();
-        clubs = new Vector<Club>();
     }
 
     @Override
@@ -59,22 +65,9 @@ public class Personne extends Profil {
 
     @Override
     public void afficher() {
-        System.out.println("Profil numéro : " + id + "\n" +
-                ConsoleColor.textColor(ConsoleColor.BLUE, prenom + " " + nom) +
+        System.out.println("Profil numéro : " + ConsoleColor.textColor(ConsoleColor.RED, Integer.toString(id)) + ", " +
+                ConsoleColor.textColor(ConsoleColor.BLUE, prenom + " " + nom.toUpperCase()) +
                 " a " + Integer.toString(age) +
-                " an" + (age > 1 ? "s" : "") +
-                " et pratique " + (sports.size() == 1 ? "le sport " : "les sports ") + ": ");
-
-        for (int i = 0; i < sports.size(); i++) {
-            System.out.println(ConsoleColor.textColor(ConsoleColor.GREEN, sports.elementAt(i).toString()));
-        }
-        if (clubs.size() != 0) {
-            System.out.println("dans " + (clubs.size() == 1 ? "le club " : "les clubs ") + ": ");
-        } else System.out.println("n'a pas de club !");
-
-        for (int i = 0; i< clubs.size(); i++) {
-            System.out.println(ConsoleColor.textColor(ConsoleColor.PURPLE, clubs.elementAt(i).toString()));
-        }
+                " an" + (age > 1 ? "s" : ""));
     }
-
 }

@@ -1,7 +1,8 @@
 public class Profil {
+
     protected static int id = 0;
 
-    public int getId() {
+    public static int getId() {
         return id;
     }
 
