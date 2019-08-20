@@ -1,7 +1,4 @@
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 public class Main {
 
@@ -26,10 +23,8 @@ public class Main {
             ObjectInputStream ois = new ObjectInputStream(fichier);
             ReseauSocial reseau = (ReseauSocial) ois.readObject();
             reseau.afficher();
-//            ois.close();
-        } catch (java.io.IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+            ois.close();
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 

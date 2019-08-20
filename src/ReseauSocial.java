@@ -1,6 +1,4 @@
-import java.io.Console;
-import java.io.IOException;
-import java.io.Serializable;
+import java.io.*;
 import java.util.Map;
 import java.util.Hashtable;
 
@@ -11,15 +9,14 @@ public class ReseauSocial implements Serializable {
     private Hashtable<String, Sport> sports = new Hashtable<>();
     private Hashtable<String, Club> clubs = new Hashtable<>();
 
-    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+    private void writeObject(ObjectOutputStream out) throws IOException {
         out.writeObject(personnes);
         out.writeObject(sports);
         out.writeObject(clubs);
         out.flush();
     }
 
-    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
-        System.out.println("coucou");
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         personnes = (Hashtable<String, Personne>) in.readObject();
         sports = (Hashtable<String, Sport>) in.readObject();
         clubs = (Hashtable<String, Club>) in.readObject();

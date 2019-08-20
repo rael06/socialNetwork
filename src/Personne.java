@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Hashtable;
 
@@ -73,18 +75,22 @@ public class Personne extends Profil implements Serializable {
                 " an" + (age > 1 ? "s" : ""));
     }
 
-    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+    private void writeObject(ObjectOutputStream out) throws IOException {
         out.writeObject(nom);
         out.writeObject(prenom);
         out.writeInt(age);
         out.writeInt(id);
+        out.writeObject(sports);
+        out.writeObject(clubs);
         out.flush();
     }
 
-    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         nom = (String) in.readObject();
         prenom = (String) in.readObject();
         age = in.readInt();
         id = in.readInt();
+        sports = (Hashtable<String, Sport>) in.readObject();
+        clubs = (Hashtable<String, Club>) in.readObject();
     }
 }

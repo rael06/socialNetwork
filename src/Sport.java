@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Hashtable;
@@ -50,12 +52,15 @@ public class Sport implements Serializable {
         return nom;
     }
 
-    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+    private void writeObject(ObjectOutputStream out) throws IOException {
         out.writeObject(nom);
+        out.writeObject(pers);
+        out.writeObject(pratiquants);
         out.flush();
     }
 
-    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         nom = (String) in.readObject();
+        pratiquants = (Hashtable<String, Personne>) in.readObject();
     }
 }
