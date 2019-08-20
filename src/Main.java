@@ -16,7 +16,9 @@ public class Main {
             e.printStackTrace();
         }
 
+
         reseauSocial.afficher();
+
 
         try {
             FileInputStream fichier = new FileInputStream("personne.txt");
