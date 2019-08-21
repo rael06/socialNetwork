@@ -12,7 +12,9 @@ public class Main {
         reseauSocial.afficher();
 
         ReseauSocial result = (ReseauSocial) StreamFile.read("reseauSocial.txt");
-        result.afficher();
+        if (result != null) {
+            result.afficher();
+        }
     }
 
 }
