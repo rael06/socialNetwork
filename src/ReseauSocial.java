@@ -92,15 +92,6 @@ public class ReseauSocial implements Serializable {
         }
 
         if (personFound != null) personFound.setClub(clubFound);
-
-        /*
-        personnes.elementAt(0).setSport(sports.elementAt(0));
-        personnes.elementAt(0).setSport(sports.elementAt(1));
-        personnes.elementAt(0).setSport(sports.elementAt(2));
-
-        personnes.elementAt(1).setSport(sports.elementAt(1));
-        personnes.elementAt(1).setSport(sports.elementAt(0));
-        */
     }
 
     private void setPersonSport(String personName, String sportName) {
@@ -126,10 +117,8 @@ public class ReseauSocial implements Serializable {
     }
 
     public void afficher() {
-        for (Map.Entry<String, Club>club: clubs.entrySet()) {
+        for (Map.Entry<String, Club> club : clubs.entrySet()) {
             club.getValue().afficher();
         }
     }
-
-
 }

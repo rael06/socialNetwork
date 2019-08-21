@@ -51,7 +51,7 @@ public class Personne extends Profil implements Serializable {
 
     public void setClub(Club club) {
         clubs.put(club.getNom(), club);
-        club.addPratiquant(this);
+        club.addAdherent(this);
     }
 
     public Personne(String _nom, String _prenom, int _age) {

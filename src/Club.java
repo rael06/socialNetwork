@@ -2,7 +2,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Hashtable;
 import java.util.Set;
@@ -10,7 +9,7 @@ import java.util.Set;
 public class Club implements Serializable {
 
     private String nom;
-    private Hashtable<String, Personne> pratiquants = new Hashtable<>();
+    private Hashtable<String, Personne> adherents = new Hashtable<>();
 
     public String getNom() {
         return nom;
@@ -24,8 +23,8 @@ public class Club implements Serializable {
         nom = _nom;
     }
 
-    public void addPratiquant(Personne personne) {
-        pratiquants.put(personne.getNom(), personne);
+    public void addAdherent(Personne personne) {
+        adherents.put(personne.getNom(), personne);
     }
 
     public void afficher() {
@@ -34,7 +33,7 @@ public class Club implements Serializable {
 
         Map<String, Sport> uniquesSports = new Hashtable<>();
 
-        for (Map.Entry<String, Personne> personne : pratiquants.entrySet()) {
+        for (Map.Entry<String, Personne> personne : adherents.entrySet()) {
             personne.getValue().afficher();
 
             Hashtable<String, Sport> sports = personne.getValue().getSports();
@@ -85,12 +84,12 @@ public class Club implements Serializable {
 
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.writeObject(nom);
-        out.writeObject(pratiquants);
+        out.writeObject(adherents);
         out.flush();
     }
 
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         nom = (String) in.readObject();
-        pratiquants = (Hashtable<String, Personne>) in.readObject();
+        adherents = (Hashtable<String, Personne>) in.readObject();
     }
 }
