@@ -71,7 +71,7 @@ public class Personne extends Profil implements Serializable {
     public void afficher() {
         System.out.println("Profil numéro : " + ConsoleColor.textColor(ConsoleColor.RED, Integer.toString(id)) + ", " +
                 ConsoleColor.textColor(ConsoleColor.BLUE, prenom + " " + nom.toUpperCase()) +
-                " a " + Integer.toString(age) +
+                " a " + age +
                 " an" + (age > 1 ? "s" : ""));
     }
 

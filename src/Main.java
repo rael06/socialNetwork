@@ -1,4 +1,5 @@
 import java.io.*;
+import java.lang.reflect.Type;
 
 public class Main {
 
@@ -6,31 +7,12 @@ public class Main {
 
         ReseauSocial reseauSocial = new ReseauSocial();
 
-        try {
-            FileOutputStream fichier = new FileOutputStream("personne.txt");
-            ObjectOutputStream oos = new ObjectOutputStream(fichier);
-            oos.writeObject(reseauSocial);
-            oos.flush();
-            oos.close();
-        } catch (java.io.IOException e) {
-            e.printStackTrace();
-        }
-
+        StreamFile.write("reseauSocial.txt", reseauSocial);
 
         reseauSocial.afficher();
 
-
-        try {
-            FileInputStream fichier = new FileInputStream("personne.txt");
-            ObjectInputStream ois = new ObjectInputStream(fichier);
-            ReseauSocial reseau = (ReseauSocial) ois.readObject();
-            reseau.afficher();
-            ois.close();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-
+        ReseauSocial result = (ReseauSocial) StreamFile.read("reseauSocial.txt");
+        result.afficher();
     }
 
 }
