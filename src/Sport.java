@@ -61,6 +61,7 @@ public class Sport implements Serializable {
 
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         nom = (String) in.readObject();
-        pratiquants = (Hashtable<String, Personne>) in.readObject();
+        Object object = in.readObject();
+        pratiquants = (Hashtable<String, Personne>) object;
     }
 }
