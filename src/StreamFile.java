@@ -1,7 +1,7 @@
 import java.io.*;
-import java.lang.reflect.Type;
 
 public class StreamFile {
+
     public static void write(String fileString, Object object) {
         try {
             FileOutputStream fichier = new FileOutputStream(fileString);
@@ -14,13 +14,26 @@ public class StreamFile {
         }
     }
 
-    public static Object read(String fileString) {
+//    public static Object read(String fileString) {
+//        try {
+//            FileInputStream fichier = new FileInputStream(fileString);
+//            ObjectInputStream ois = new ObjectInputStream(fichier);
+//            Object object = ois.readObject();
+//            ois.close();
+//            return object;
+//        } catch (IOException | ClassNotFoundException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
+
+    public static <T> T read(T recepteur, String fileString) {
         try {
             FileInputStream fichier = new FileInputStream(fileString);
             ObjectInputStream ois = new ObjectInputStream(fichier);
-            Object object = ois.readObject();
+            recepteur = (T) ois.readObject();
             ois.close();
-            return object;
+            return recepteur;
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
             return null;

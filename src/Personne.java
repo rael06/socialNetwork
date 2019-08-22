@@ -85,6 +85,7 @@ public class Personne extends Profil implements Serializable {
         out.flush();
     }
 
+    @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         nom = (String) in.readObject();
         prenom = (String) in.readObject();

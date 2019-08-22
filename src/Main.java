@@ -1,6 +1,3 @@
-import java.io.*;
-import java.lang.reflect.Type;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -9,9 +6,11 @@ public class Main {
 
         StreamFile.write("reseauSocial.txt", reseauSocial);
 
-        reseauSocial.afficher();
+//        reseauSocial.afficher();
 
-        ReseauSocial result = (ReseauSocial) StreamFile.read("reseauSocial.txt");
+        ReseauSocial result = StreamFile.read(new ReseauSocial(), "reseauSocial.txt");
+//        ReseauSocial result = (ReseauSocial) StreamFile.read("reseauSocial.txt");
+
         if (result != null) {
             result.afficher();
         }
