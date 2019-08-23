@@ -9,6 +9,30 @@ public class ReseauSocial implements Serializable {
     private Hashtable<String, Sport> sports = new Hashtable<>();
     private Hashtable<String, Club> clubs = new Hashtable<>();
 
+    public Hashtable<String, Personne> getPersonnes() {
+        return personnes;
+    }
+
+    public void setPersonnes(Hashtable<String, Personne> personnes) {
+        this.personnes = personnes;
+    }
+
+    public Hashtable<String, Sport> getSports() {
+        return sports;
+    }
+
+    public void setSports(Hashtable<String, Sport> sports) {
+        this.sports = sports;
+    }
+
+    public Hashtable<String, Club> getClubs() {
+        return clubs;
+    }
+
+    public void setClubs(Hashtable<String, Club> clubs) {
+        this.clubs = clubs;
+    }
+
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.writeObject(personnes);
         out.writeObject(sports);

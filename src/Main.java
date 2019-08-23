@@ -9,7 +9,9 @@ public class Main {
 
     public static void main(String[] args) {
 
-//        ReseauSocial reseauSocial = new ReseauSocial();
+        ReseauSocialManager reseauSocialManager = new ReseauSocialManager();
+
+        ReseauSocial reseauSocial = new ReseauSocial();
 //
 //        StreamFile.write("reseauSocial.txt", reseauSocial);
 //
