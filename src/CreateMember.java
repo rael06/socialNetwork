@@ -1,14 +1,15 @@
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
+import java.util.List;
 
-public class CreateMember extends JDialog implements ActionListener {
+public class CreateMember extends JDialog implements ActionListener, ListSelectionListener {
 
     private Container createMember;
-
-    private Hashtable<String, Sport> sports = (new ReseauSocial()).getSports();
 
     private JButton cancel = new JButton("Annuler");
     private JButton create = new JButton("Créer");
@@ -23,8 +24,17 @@ public class CreateMember extends JDialog implements ActionListener {
     private TextField firstName = new TextField();
     private TextField age = new TextField();
 
-    private Set sportsKeys = sports.keySet();
-    private JList<Sport> sportsList = new JList(sportsKeys.toArray());
+    private Hashtable<String, Sport> originSports = (new ReseauSocial()).getSports();
+    private List<String> sportsNamesList = new ArrayList<>(originSports.keySet());
+    private JList sportsList = new JList(sportsNamesList.toArray());
+    private List<String> memberSportsNamesList = new ArrayList<>();
+    private JList memberSportsList = new JList(memberSportsNamesList.toArray());
+
+    private Hashtable<String, Club> originClubs = (new ReseauSocial()).getClubs();
+    private List<String> clubsNamesList = new ArrayList<>(originClubs.keySet());
+    private JList clubsList = new JList(clubsNamesList.toArray());
+    private List<String> memberClubsNamesList = new ArrayList<>();
+    private JList memberClubsList = new JList(memberClubsNamesList.toArray());
 
     CreateMember(PersonneManager personneManager) {
         super(personneManager, "Création du membre", true);
@@ -43,9 +53,6 @@ public class CreateMember extends JDialog implements ActionListener {
     }
 
     private void addElements() {
-
-        System.out.println(this.getWidth() / 2);
-
         // First element basic bounds
         int x = 20, y = 30, w = 150, h = 20;
 
@@ -62,6 +69,7 @@ public class CreateMember extends JDialog implements ActionListener {
         createMember.add(create);
 
         // Basic elements
+        // member info fields
         nameLabel.setBounds(x, y, w, h);
         createMember.add(nameLabel);
 
@@ -79,16 +87,59 @@ public class CreateMember extends JDialog implements ActionListener {
 
         age.setBounds(x + w, y * 3, w, h);
         createMember.add(age);
+        // !member info fields
 
-        sportsLabel.setBounds(xb - w - 10, y * 3 + 50, w, h);
+        // sports section
+        sportsLabel.setBounds(x + 50, y * 3 + 50, w, h);
         createMember.add(sportsLabel);
 
-        sportsList.setBounds(x, y * 4 + 50, xb - 150, 200);
+        sportsList.setBounds(x, y * 4 + 50, 130, 200);
+        sportsList.addListSelectionListener(this);
         createMember.add(sportsList);
+
+        memberSportsList.setBounds(x + (xb - 150) - 30, y * 4 + 50, 130, 200);
+        memberSportsList.addListSelectionListener(this);
+        createMember.add(memberSportsList);
+        // !sports section
+
+        // club section
+        clubsLabel.setBounds(x + 100 + xb, y * 3 + 50, w, h);
+        createMember.add(clubsLabel);
+
+        clubsList.setBounds(xb, y * 4 + 50, 130, 200);
+        clubsList.addListSelectionListener(this);
+        createMember.add(clubsList);
+
+        memberClubsList.setBounds(xb + (xb - 150) - 30, y * 4 + 50, 130, 200);
+        memberClubsList.addListSelectionListener(this);
+        createMember.add(memberClubsList);
+        // !club section
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == cancel) this.setVisible(false);
+        if (e.getSource().equals(cancel)) this.setVisible(false);
+        if (e.getSource().equals(create)) System.out.println("create");
+    }
+
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+        if (!e.getValueIsAdjusting() && e.getSource().equals(sportsList)) {
+            if (!memberSportsNamesList.contains((String) sportsList.getSelectedValue())) {
+                memberSportsNamesList.add((String) sportsList.getSelectedValue());
+                sportsNamesList.remove((String) sportsList.getSelectedValue());
+            }
+
+            sportsList.setListData(sportsNamesList.toArray());
+            memberSportsList.setListData(memberSportsNamesList.toArray());
+        }
+
+        if (!e.getValueIsAdjusting() && e.getSource().equals(memberSportsList)) {
+            sportsNamesList.add((String) memberSportsList.getSelectedValue());
+            memberSportsNamesList.remove((String) memberSportsList.getSelectedValue());
+
+            sportsList.setListData(sportsNamesList.toArray());
+            memberSportsList.setListData(memberSportsNamesList.toArray());
+        }
     }
 }

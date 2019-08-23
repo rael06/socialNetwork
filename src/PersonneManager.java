@@ -30,6 +30,6 @@ public class PersonneManager extends JDialog implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == creer) new CreateMember(this);
+        if (e.getSource().equals(creer)) new CreateMember(this);
     }
 }

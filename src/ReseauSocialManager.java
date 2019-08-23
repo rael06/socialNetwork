@@ -44,9 +44,9 @@ public class ReseauSocialManager extends JDialog implements ActionListener, Wind
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == personne) new PersonneManager(this);
-        if (e.getSource() == sport) new SportManager();
-        if (e.getSource() == club) new ClubManager();
+        if (e.getSource().equals(personne)) new PersonneManager(this);
+        if (e.getSource().equals(sport)) new SportManager();
+        if (e.getSource().equals(club)) new ClubManager();
     }
 
     @Override
