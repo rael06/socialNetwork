@@ -3,6 +3,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Hashtable;
+import java.util.Map;
 
 public class Personne extends Profil implements Serializable {
     private int id;
@@ -71,8 +72,16 @@ public class Personne extends Profil implements Serializable {
     public void afficher() {
         System.out.println("Profil numéro : " + ConsoleColor.textColor(ConsoleColor.RED, Integer.toString(id)) + ", " +
                 ConsoleColor.textColor(ConsoleColor.BLUE, prenom + " " + nom.toUpperCase()) +
-                " a " + age +
-                " an" + (age > 1 ? "s" : ""));
+                " a " + ConsoleColor.textColor(ConsoleColor.YELLOW_BOLD, (age + "")) +
+                " an" + (age > 1 ? "s," : ","));
+        System.out.println("exerce le" + (sports.size() > 1 ? "s sports suivants" : " sport suivant") + " : ");
+        for (Map.Entry sport : sports.entrySet()) {
+            System.out.println(ConsoleColor.textColor(ConsoleColor.GREEN, sport.getKey().toString()));
+        }
+        System.out.println("et est dans le" + (clubs.size() > 1 ? "s clubs suivants" : " club suivant") + " : ");
+        for (Map.Entry club : clubs.entrySet()) {
+            System.out.println(ConsoleColor.textColor(ConsoleColor.PURPLE, club.getKey().toString()));
+        }
     }
 
     private void writeObject(ObjectOutputStream out) throws IOException {

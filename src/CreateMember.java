@@ -119,11 +119,32 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(cancel)) this.setVisible(false);
-        if (e.getSource().equals(create)) System.out.println("create");
+
+        // create
+        if (e.getSource().equals(create)) {
+            String memberName = name.getText();
+            String memberFirstName = firstName.getText();
+            int memberAge = Integer.parseInt(age.getText());
+            Personne personne = new Personne(memberName, memberFirstName, memberAge);
+            for (String memberSport : memberSportsNamesList) {
+                Sport sport = new Sport(memberSport);
+                if (sport.getNom() != null) personne.setSport(sport);
+            }
+
+            for (String memberClub : memberClubsNamesList) {
+                Club club = new Club(memberClub);
+                if (club.getNom() != null) personne.setClub(club);
+            }
+
+            personne.afficher();
+        }
+        ;
+        // !create
     }
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
+        // sports
         if (!e.getValueIsAdjusting() && e.getSource().equals(sportsList)) {
             if (!memberSportsNamesList.contains((String) sportsList.getSelectedValue())) {
                 memberSportsNamesList.add((String) sportsList.getSelectedValue());
@@ -140,6 +161,26 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
 
             sportsList.setListData(sportsNamesList.toArray());
             memberSportsList.setListData(memberSportsNamesList.toArray());
+        }
+        // !sports
+
+        // club
+        if (!e.getValueIsAdjusting() && e.getSource().equals(clubsList)) {
+            if (!memberClubsNamesList.contains((String) clubsList.getSelectedValue())) {
+                memberClubsNamesList.add((String) clubsList.getSelectedValue());
+                clubsNamesList.remove((String) clubsList.getSelectedValue());
+            }
+
+            clubsList.setListData(clubsNamesList.toArray());
+            memberClubsList.setListData(memberClubsNamesList.toArray());
+        }
+
+        if (!e.getValueIsAdjusting() && e.getSource().equals(memberClubsList)) {
+            clubsNamesList.add((String) memberClubsList.getSelectedValue());
+            memberClubsNamesList.remove((String) memberClubsList.getSelectedValue());
+
+            clubsList.setListData(clubsNamesList.toArray());
+            memberClubsList.setListData(memberClubsNamesList.toArray());
         }
     }
 }
