@@ -17,10 +17,10 @@ public class Client {
     public Client(Object _object, Object graphicClass) {
         host = Constants.HOST;
         port = Constants.PORT;
-        send(_object, graphicClass);
+        contact(_object, graphicClass);
     }
 
-    private void send(Object object, Object graphicClass) {
+    private void contact(Object object, Object graphicClass) {
         try (
                 Socket socket = new Socket(host, port);
                 ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
