@@ -62,7 +62,7 @@ public class Personne extends Profil implements Serializable {
     public Personne(String _nom, String _prenom, int _age) {
         super();
         id = Profil.getId();
-        nom = _nom;
+        nom = _nom.toUpperCase();
         prenom = (_prenom.charAt(0) + "").toUpperCase() + _prenom.substring(1);
         age = _age;
     }
@@ -75,7 +75,7 @@ public class Personne extends Profil implements Serializable {
     @Override
     public void afficher() {
         System.out.println("Profil numéro : " + ConsoleColor.textColor(ConsoleColor.RED, Integer.toString(id)) + ", " +
-                ConsoleColor.textColor(ConsoleColor.BLUE, prenom + " " + nom.toUpperCase()) +
+                ConsoleColor.textColor(ConsoleColor.BLUE, prenom + " " + nom) +
                 " a " + ConsoleColor.textColor(ConsoleColor.YELLOW_BOLD, (age + "")) +
                 " an" + (age > 1 ? "s," : ","));
         System.out.println("exerce le" + (sports.size() > 1 ? "s sports suivants" : " sport suivant") + " : ");
