@@ -1,3 +1,5 @@
+package Utils;
+
 public class ConsoleColor {
     // Reset
     public static final String RESET = "\033[0m";  // Text Reset

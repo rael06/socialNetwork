@@ -1,3 +1,5 @@
+package ReseauSocial;
+
 import java.io.*;
 import java.net.*;
 

@@ -1,3 +1,5 @@
+package ReseauSocial;
+
 import java.io.*;
 
 public class StreamFile {

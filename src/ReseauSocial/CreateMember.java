@@ -1,9 +1,14 @@
+package ReseauSocial;
+
+import ClientServerRelation.Client;
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
@@ -136,7 +141,8 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
                 if (club.getNom() != null) personne.setClub(club);
             }
 
-            personne.afficher();
+            new Client(personne);
+
         }
         ;
         // !create

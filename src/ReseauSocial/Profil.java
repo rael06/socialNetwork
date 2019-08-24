@@ -1,3 +1,5 @@
+package ReseauSocial;
+
 public class Profil {
 
     protected static int id = 0;
