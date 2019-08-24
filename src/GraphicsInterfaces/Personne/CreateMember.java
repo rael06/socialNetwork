@@ -1,6 +1,8 @@
-package ReseauSocial;
+package GraphicsInterfaces.Personne;
 
 import ClientServerRelation.Client;
+import GraphicsInterfaces.*;
+import ReseauSocial.*;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -8,8 +10,8 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 public class CreateMember extends JDialog implements ActionListener, ListSelectionListener {

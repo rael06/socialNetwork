@@ -1,4 +1,8 @@
-package ReseauSocial;
+package GraphicsInterfaces;
+
+import GraphicsInterfaces.Club.ClubManager;
+import GraphicsInterfaces.Personne.PersonneManager;
+import GraphicsInterfaces.Sport.SportManager;
 
 import javax.swing.*;
 import java.awt.*;

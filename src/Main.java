@@ -1,4 +1,5 @@
-package ReseauSocial;
+import GraphicsInterfaces.ReseauSocialManager;
+import ReseauSocial.ReseauSocial;
 
 public class Main {
 

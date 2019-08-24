@@ -1,4 +1,6 @@
-package ReseauSocial;
+package Old;
+
+import ReseauSocial.ReseauSocial;
 
 import java.io.*;
 import java.net.*;

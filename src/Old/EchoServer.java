@@ -1,5 +1,7 @@
-package ReseauSocial;// https://docs.oracle.com/javase/tutorial/networking/sockets/examples/EchoServer.java
+package Old;// https://docs.oracle.com/javase/tutorial/networking/sockets/examples/EchoServer.java
 // Voir https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html
+
+import ReseauSocial.ReseauSocial;
 
 import java.net.*;
 import java.io.*;

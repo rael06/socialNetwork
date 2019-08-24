@@ -1,4 +1,6 @@
-package ReseauSocial;
+package GraphicsInterfaces.Personne;
+
+import GraphicsInterfaces.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +11,7 @@ public class PersonneManager extends JDialog implements ActionListener {
 
     private JButton creer;
 
-    PersonneManager(ReseauSocialManager reseauSocialManager) {
+    public PersonneManager(ReseauSocialManager reseauSocialManager) {
         super(reseauSocialManager, "Interface de gestion des membres", true);
         creer = new JButton("Créer");
         creer.addActionListener(this);
