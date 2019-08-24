@@ -1,6 +1,6 @@
 package GraphicsInterfaces.Personne;
 
-import GraphicsInterfaces.*;
+import GraphicsInterfaces.ReseauSocialManager;
 
 import javax.swing.*;
 import java.awt.*;

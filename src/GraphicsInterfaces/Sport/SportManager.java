@@ -1,6 +1,5 @@
 package GraphicsInterfaces.Sport;
 
-import GraphicsInterfaces.Personne.CreateMember;
 import GraphicsInterfaces.ReseauSocialManager;
 
 import javax.swing.*;

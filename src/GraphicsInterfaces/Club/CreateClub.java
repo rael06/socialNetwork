@@ -1,7 +1,8 @@
-package GraphicsInterfaces.Sport;
+package GraphicsInterfaces.Club;
 
 import ClientServerRelation.Client;
 import GraphicsInterfaces.ReseauSocialManager;
+import ReseauSocial.Club;
 import ReseauSocial.Sport;
 
 import javax.swing.*;
@@ -9,9 +10,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CreateSport extends JDialog implements ActionListener {
+public class CreateClub extends JDialog implements ActionListener {
 
-    private Container createSport;
+    private Container createClub;
 
     private JButton cancel = new JButton("Annuler");
     private JButton create = new JButton("Créer");
@@ -20,8 +21,8 @@ public class CreateSport extends JDialog implements ActionListener {
 
     private TextField name = new TextField();
 
-    CreateSport(SportManager sportManager) {
-        super(sportManager, "Création du sport", true);
+    CreateClub(ClubManager clubManager) {
+        super(clubManager, "Création du club", true);
 //        setResizable(true);
         setBounds(
                 ReseauSocialManager.ORIG_BOUNDS[0],
@@ -29,8 +30,8 @@ public class CreateSport extends JDialog implements ActionListener {
                 ReseauSocialManager.ORIG_BOUNDS[2],
                 ReseauSocialManager.ORIG_BOUNDS[3]
         );
-        createSport = getContentPane();
-        createSport.setLayout(null);
+        createClub = getContentPane();
+        createClub.setLayout(null);
         addElements();
 
         this.setVisible(true);
@@ -46,19 +47,19 @@ public class CreateSport extends JDialog implements ActionListener {
         // Buttons
         cancel.addActionListener(this);
         cancel.setBounds(xb - wb - 20, yb, wb, hb);
-        createSport.add(cancel);
+        createClub.add(cancel);
 
         create.addActionListener(this);
         create.setBounds(xb + 20, yb, wb, hb);
-        createSport.add(create);
+        createClub.add(create);
 
         // Basic elements
         // sport info fields
         nameLabel.setBounds(x, y, w, h);
-        createSport.add(nameLabel);
+        createClub.add(nameLabel);
 
         name.setBounds(x + w, y, w, h);
-        createSport.add(name);
+        createClub.add(name);
         // !sport info fields
     }
 
@@ -68,9 +69,9 @@ public class CreateSport extends JDialog implements ActionListener {
 
         // create
         if (e.getSource().equals(create)) {
-            String sportName = name.getText();
-            Sport sport = new Sport(sportName);
-            new Client(sport, this);
+            String clubName = name.getText();
+            Club club = new Club(clubName);
+            new Client(club, this);
         }
         // !create
     }

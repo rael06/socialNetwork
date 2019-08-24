@@ -1,8 +1,11 @@
 package GraphicsInterfaces.Personne;
 
 import ClientServerRelation.Client;
-import GraphicsInterfaces.*;
-import ReseauSocial.*;
+import GraphicsInterfaces.ReseauSocialManager;
+import ReseauSocial.Club;
+import ReseauSocial.Personne;
+import ReseauSocial.ReseauSocial;
+import ReseauSocial.Sport;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -143,7 +146,7 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
                 if (club.getNom() != null) personne.setClub(club);
             }
 
-            new Client(personne);
+            new Client(personne, this);
 
         }
         ;
