@@ -1,14 +1,12 @@
 package ClientServerRelation;
 
 import Constants.Constants;
-import GraphicsInterfaces.Club.CreateClub;
-import GraphicsInterfaces.Personne.CreateMember;
-import GraphicsInterfaces.Sport.CreateSport;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.sql.ResultSet;
 
 public class Client {
     private String host;
@@ -19,7 +17,7 @@ public class Client {
         port = Constants.PORT;
     }
 
-    public void contact(Object object) {
+    public void create(Object object) {
         try (
                 Socket socket = new Socket(host, port);
                 ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream())
@@ -29,5 +27,21 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public Object request(String requestName) {
+        try (
+                Socket socket = new Socket(host, port);
+                ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+                ObjectInputStream ois = new ObjectInputStream(socket.getInputStream())
+        ) {
+            oos.writeObject(requestName);
+            oos.flush();
+            Object o = ois.readObject();
+            if (o != null) return o;
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

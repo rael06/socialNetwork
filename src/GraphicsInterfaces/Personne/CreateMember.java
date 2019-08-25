@@ -35,15 +35,13 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
     private TextField firstName = new TextField();
     private TextField age = new TextField();
 
-    private HashMap<String, Sport> originSports = (new ReseauSocial()).getSports();
-    private List<String> sportsNamesList = new ArrayList<>(originSports.keySet());
-    private JList sportsList = new JList(sportsNamesList.toArray());
+    private List<String> sportsNamesList;
+    private JList sportsList;
     private List<String> memberSportsNamesList = new ArrayList<>();
     private JList memberSportsList = new JList(memberSportsNamesList.toArray());
 
-    private HashMap<String, Club> originClubs = (new ReseauSocial()).getClubs();
-    private List<String> clubsNamesList = new ArrayList<>(originClubs.keySet());
-    private JList clubsList = new JList(clubsNamesList.toArray());
+    private List<String> clubsNamesList;
+    private JList clubsList;
     private List<String> memberClubsNamesList = new ArrayList<>();
     private JList memberClubsList = new JList(memberClubsNamesList.toArray());
 
@@ -61,6 +59,15 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
         );
         createMember = getContentPane();
         createMember.setLayout(null);
+
+        HashMap<String, Sport> originSports = (HashMap<String, Sport>) client.request("sports");
+        sportsNamesList = new ArrayList<>(originSports.keySet());
+        sportsList = new JList(sportsNamesList.toArray());
+
+        HashMap<String, Club> originClubs = (HashMap<String, Club>) client.request("clubs");
+        clubsNamesList = new ArrayList<>(originClubs.keySet());
+        clubsList = new JList(clubsNamesList.toArray());
+
         addElements();
 
         this.setVisible(true);
@@ -136,21 +143,31 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
 
         // create
         if (e.getSource().equals(create)) {
-            String memberName = name.getText();
-            String memberFirstName = firstName.getText();
-            int memberAge = Integer.parseInt(age.getText());
-            Personne personne = new Personne(memberName, memberFirstName, memberAge);
-            for (String memberSport : memberSportsNamesList) {
-                Sport sport = new Sport(memberSport);
-                if (sport.getNom() != null) personne.setSport(sport);
+            String memberName = name.getText().isEmpty() ? null : name.getText();
+            String memberFirstName = firstName.getText().isEmpty() ? null : firstName.getText();
+            int memberAge;
+            if (!age.getText().isEmpty()) {
+                memberAge = Integer.parseInt(age.getText());
+            } else {
+                memberAge = 0;
             }
 
-            for (String memberClub : memberClubsNamesList) {
-                Club club = new Club(memberClub);
-                if (club.getNom() != null) personne.setClub(club);
-            }
+            if (memberName != null && memberFirstName != null && memberAge != 0) {
+                Personne personne = new Personne(memberName, memberFirstName, memberAge);
 
-            client.contact(personne);
+
+                for (String memberSport : memberSportsNamesList) {
+                    Sport sport = new Sport(memberSport);
+                    if (sport.getNom() != null) personne.setSport(sport);
+                }
+
+                for (String memberClub : memberClubsNamesList) {
+                    Club club = new Club(memberClub);
+                    if (club.getNom() != null) personne.setClub(club);
+                }
+
+                client.create(personne);
+            }
 
         }
         // !create

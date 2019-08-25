@@ -48,40 +48,7 @@ public class ReseauSocial implements Serializable {
         clubs = (HashMap<String, Club>) in.readObject();
     }
 
-    public ReseauSocial() {
-
-        //create persons
-        createPerson(new Personne("CALITRO", "Rael", 36));
-        createPerson(new Personne("DUPONT", "Jean", 60));
-        createPerson(new Personne("MICHU", "Geneviève", 51));
-
-        //create sports
-        createSport(new Sport("cyclisme"));
-        createSport(new Sport("alpinisme"));
-        createSport(new Sport("athlétisme"));
-        createSport(new Sport("boxe"));
-        createSport(new Sport("tennis"));
-
-        //create clubs
-        createClub(new Club("J'aime Le Sport"));
-        createClub(new Club("Youpi Sport"));
-
-        //set sports to persons
-        setPersonSport("CALITRO", "cyclisme");
-        setPersonSport("CALITRO", "alpinisme");
-        setPersonSport("CALITRO", "athlétisme");
-        setPersonSport("Dupont", "athlétisme");
-        setPersonSport("Dupont", "alpinisme");
-        setPersonSport("Michu", "alpinisme");
-        setPersonSport("Michu", "tennis");
-        setPersonSport("Michu", "boxe");
-
-        //set clubs to persons
-        setPersonClub("calitro", "J'aime Le Sport");
-        setPersonClub("Dupont", "J'aime Le Sport");
-        setPersonClub("Dupont", "Youpi Sport");
-        setPersonClub("Michu", "Youpi Sport");
-    }
+    public ReseauSocial() {}
 
     private void createPerson(Personne personne) {
         personnes.put(personne.getNom(), personne);

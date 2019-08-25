@@ -1,9 +1,9 @@
 package GraphicsInterfaces.Club;
 
 import ClientServerRelation.Client;
+//import GraphicsInterfaces.ClientRelation;
 import GraphicsInterfaces.ReseauSocialManager;
 import ReseauSocial.Club;
-import ReseauSocial.Sport;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 
 public class CreateClub extends JDialog implements ActionListener {
 
-    private Client client;
+    private Client client = new Client();
 
     private Container createClub;
 
@@ -24,8 +24,8 @@ public class CreateClub extends JDialog implements ActionListener {
     private TextField name = new TextField();
 
     CreateClub(ClubManager clubManager) {
+//        super().super(clubManager, "Création du club", true);
         super(clubManager, "Création du club", true);
-        client = new Client();
 //        setResizable(true);
         setBounds(
                 ReseauSocialManager.ORIG_BOUNDS[0],
@@ -74,7 +74,7 @@ public class CreateClub extends JDialog implements ActionListener {
         if (e.getSource().equals(create)) {
             String clubName = name.getText();
             Club club = new Club(clubName);
-            client.contact(club);
+            client.create(club);
         }
         // !create
     }

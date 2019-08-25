@@ -72,7 +72,7 @@ public class CreateSport extends JDialog implements ActionListener {
         if (e.getSource().equals(create)) {
             String sportName = name.getText();
             Sport sport = new Sport(sportName);
-            client.contact(sport);
+            client.create(sport);
         }
         // !create
     }
