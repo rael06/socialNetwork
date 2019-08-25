@@ -14,7 +14,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
 
 public class CreateMember extends JDialog implements ActionListener, ListSelectionListener {
@@ -34,13 +34,13 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
     private TextField firstName = new TextField();
     private TextField age = new TextField();
 
-    private Hashtable<String, Sport> originSports = (new ReseauSocial()).getSports();
+    private HashMap<String, Sport> originSports = (new ReseauSocial()).getSports();
     private List<String> sportsNamesList = new ArrayList<>(originSports.keySet());
     private JList sportsList = new JList(sportsNamesList.toArray());
     private List<String> memberSportsNamesList = new ArrayList<>();
     private JList memberSportsList = new JList(memberSportsNamesList.toArray());
 
-    private Hashtable<String, Club> originClubs = (new ReseauSocial()).getClubs();
+    private HashMap<String, Club> originClubs = (new ReseauSocial()).getClubs();
     private List<String> clubsNamesList = new ArrayList<>(originClubs.keySet());
     private JList clubsList = new JList(clubsNamesList.toArray());
     private List<String> memberClubsNamesList = new ArrayList<>();
@@ -149,7 +149,6 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
             new Client(personne, this);
 
         }
-        ;
         // !create
     }
 
@@ -157,9 +156,9 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
     public void valueChanged(ListSelectionEvent e) {
         // sports
         if (!e.getValueIsAdjusting() && e.getSource().equals(sportsList)) {
-            if (!memberSportsNamesList.contains((String) sportsList.getSelectedValue())) {
+            if (!memberSportsNamesList.contains(sportsList.getSelectedValue())) {
                 memberSportsNamesList.add((String) sportsList.getSelectedValue());
-                sportsNamesList.remove((String) sportsList.getSelectedValue());
+                sportsNamesList.remove(sportsList.getSelectedValue());
             }
 
             sportsList.setListData(sportsNamesList.toArray());
@@ -168,7 +167,7 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
 
         if (!e.getValueIsAdjusting() && e.getSource().equals(memberSportsList)) {
             sportsNamesList.add((String) memberSportsList.getSelectedValue());
-            memberSportsNamesList.remove((String) memberSportsList.getSelectedValue());
+            memberSportsNamesList.remove(memberSportsList.getSelectedValue());
 
             sportsList.setListData(sportsNamesList.toArray());
             memberSportsList.setListData(memberSportsNamesList.toArray());
@@ -177,9 +176,9 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
 
         // club
         if (!e.getValueIsAdjusting() && e.getSource().equals(clubsList)) {
-            if (!memberClubsNamesList.contains((String) clubsList.getSelectedValue())) {
+            if (!memberClubsNamesList.contains(clubsList.getSelectedValue())) {
                 memberClubsNamesList.add((String) clubsList.getSelectedValue());
-                clubsNamesList.remove((String) clubsList.getSelectedValue());
+                clubsNamesList.remove(clubsList.getSelectedValue());
             }
 
             clubsList.setListData(clubsNamesList.toArray());
@@ -188,7 +187,7 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
 
         if (!e.getValueIsAdjusting() && e.getSource().equals(memberClubsList)) {
             clubsNamesList.add((String) memberClubsList.getSelectedValue());
-            memberClubsNamesList.remove((String) memberClubsList.getSelectedValue());
+            memberClubsNamesList.remove(memberClubsList.getSelectedValue());
 
             clubsList.setListData(clubsNamesList.toArray());
             memberClubsList.setListData(memberClubsNamesList.toArray());

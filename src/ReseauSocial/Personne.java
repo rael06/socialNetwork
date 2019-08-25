@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Personne extends Profil implements Serializable {
@@ -14,8 +14,8 @@ public class Personne extends Profil implements Serializable {
     private String nom;
     private String prenom;
     private int age;
-    private Hashtable<String, Sport> sports = new Hashtable<>();
-    private Hashtable<String, Club> clubs = new Hashtable<>();
+    private HashMap<String, Sport> sports = new HashMap<>();
+    private HashMap<String, Club> clubs = new HashMap<>();
 
     public String getNom() {
         return nom;
@@ -41,7 +41,7 @@ public class Personne extends Profil implements Serializable {
         this.age = age;
     }
 
-    public Hashtable<String, Sport> getSports() {
+    public HashMap<String, Sport> getSports() {
         return sports;
     }
 
@@ -50,7 +50,7 @@ public class Personne extends Profil implements Serializable {
         sport.addPratiquant(this);
     }
 
-    public Hashtable<String, Club> getClubs() {
+    public HashMap<String, Club> getClubs() {
         return clubs;
     }
 
@@ -104,7 +104,7 @@ public class Personne extends Profil implements Serializable {
         prenom = (String) in.readObject();
         age = in.readInt();
         id = in.readInt();
-        sports = (Hashtable<String, Sport>) in.readObject();
-        clubs = (Hashtable<String, Club>) in.readObject();
+        sports = (HashMap<String, Sport>) in.readObject();
+        clubs = (HashMap<String, Club>) in.readObject();
     }
 }

@@ -7,13 +7,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Map;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Set;
 
 public class Club implements Serializable {
 
     private String nom;
-    private Hashtable<String, Personne> adherents = new Hashtable<>();
+    private HashMap<String, Personne> adherents = new HashMap<>();
 
     public String getNom() {
         return nom;
@@ -35,12 +35,12 @@ public class Club implements Serializable {
         System.out.println("--------------------------------------------");
         System.out.println("Les membres du club " + ConsoleColor.textColor(ConsoleColor.PURPLE, nom) + " sont : ");
 
-        Map<String, Sport> uniquesSports = new Hashtable<>();
+        Map<String, Sport> uniquesSports = new HashMap<>();
 
         for (Map.Entry<String, Personne> personne : adherents.entrySet()) {
             personne.getValue().afficher();
 
-            Hashtable<String, Sport> sports = personne.getValue().getSports();
+            HashMap<String, Sport> sports = personne.getValue().getSports();
 
             Set<String> sportsKeys = sports.keySet();
             for (String key : sportsKeys) {
@@ -94,6 +94,6 @@ public class Club implements Serializable {
 
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         nom = (String) in.readObject();
-        adherents = (Hashtable<String, Personne>) in.readObject();
+        adherents = (HashMap<String, Personne>) in.readObject();
     }
 }

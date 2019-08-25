@@ -7,13 +7,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Map;
-import java.util.Hashtable;
+import java.util.HashMap;
 
 public class Sport implements Serializable {
 
     private String nom;
     private Personne pers;
-    private Map<String, Personne> pratiquants = new Hashtable<>();
+    private Map<String, Personne> pratiquants = new HashMap<>();
 
     public String getNom() {
         return nom;
@@ -66,6 +66,6 @@ public class Sport implements Serializable {
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         nom = (String) in.readObject();
         Object object = in.readObject();
-        pratiquants = (Hashtable<String, Personne>) object;
+        pratiquants = (HashMap<String, Personne>) object;
     }
 }
