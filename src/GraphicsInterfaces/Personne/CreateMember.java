@@ -19,6 +19,7 @@ import java.util.List;
 
 public class CreateMember extends JDialog implements ActionListener, ListSelectionListener {
 
+    private Client client;
     private Container createMember;
 
     private JButton cancel = new JButton("Annuler");
@@ -49,6 +50,9 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
     CreateMember(PersonneManager personneManager) {
         super(personneManager, "Création du membre", true);
 //        setResizable(true);
+
+        client = new Client();
+
         setBounds(
                 ReseauSocialManager.ORIG_BOUNDS[0],
                 ReseauSocialManager.ORIG_BOUNDS[1],
@@ -146,7 +150,7 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
                 if (club.getNom() != null) personne.setClub(club);
             }
 
-            new Client(personne, this);
+            client.contact(personne);
 
         }
         // !create

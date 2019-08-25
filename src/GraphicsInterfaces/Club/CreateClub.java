@@ -12,6 +12,8 @@ import java.awt.event.ActionListener;
 
 public class CreateClub extends JDialog implements ActionListener {
 
+    private Client client;
+
     private Container createClub;
 
     private JButton cancel = new JButton("Annuler");
@@ -23,6 +25,7 @@ public class CreateClub extends JDialog implements ActionListener {
 
     CreateClub(ClubManager clubManager) {
         super(clubManager, "Création du club", true);
+        client = new Client();
 //        setResizable(true);
         setBounds(
                 ReseauSocialManager.ORIG_BOUNDS[0],
@@ -71,7 +74,7 @@ public class CreateClub extends JDialog implements ActionListener {
         if (e.getSource().equals(create)) {
             String clubName = name.getText();
             Club club = new Club(clubName);
-            new Client(club, this);
+            client.contact(club);
         }
         // !create
     }
