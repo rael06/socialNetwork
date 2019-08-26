@@ -2,6 +2,7 @@ package GraphicsInterfaces.Personne;
 
 import ClientServerRelation.Client;
 import GraphicsInterfaces.ReseauSocialManager;
+import GraphicsInterfaces.ValuedButton;
 import ReseauSocial.Club;
 import ReseauSocial.Personne;
 import ReseauSocial.Sport;
@@ -61,16 +62,16 @@ public class PersonneManager extends JDialog implements ActionListener {
         JLabel memberName, memberFirstName, memberAge, memberSports, memberClubs;
         JButton update, delete;
         int j = 1;
+
         for (Map.Entry<String, Personne> member : members.entrySet()) {
             j++;
             int x = 20, y = 30, w = 200, h = 30;
-            update = new JButton("Modifier");
-//            update.setActionCommand(member.getValue().getNom());
-            update.setActionCommand(String.valueOf(member.getValue().getId()));
+            update = new ValuedButton("Modifier", member.getValue());
+            update.setActionCommand("update");
             update.addActionListener(this);
 
-            delete = new JButton("Supprimer");
-            delete.setActionCommand(member.getValue().getNom());
+            delete = new ValuedButton("Supprimer", member.getValue());
+            delete.setActionCommand("delete");
             delete.addActionListener(this);
 
 
@@ -94,7 +95,7 @@ public class PersonneManager extends JDialog implements ActionListener {
             i = 0;
             for (Map.Entry<String, Club> club : member.getValue().getClubs().entrySet()) {
                 i++;
-                if (i < member.getValue().getSports().entrySet().size()) {
+                if (i < member.getValue().getClubs().entrySet().size()) {
                     memberClubsString.append(club.getValue().getNom()).append(", ");
                 } else {
                     memberClubsString.append(club.getValue().getNom());
@@ -107,7 +108,8 @@ public class PersonneManager extends JDialog implements ActionListener {
             memberAge.setBounds(x + w * 2, y * j, w, h);
             memberSports.setBounds(x + w * 3, y * j, w, h);
             memberClubs.setBounds(x + w * 4, y * j, w, h);
-            update.setBounds(x + w * 5, y * j, w, h);
+            update.setBounds(x + w * 5, y * j, w - 30, h);
+            delete.setBounds(x + w * 6, y * j, w - 30, h);
 
             personneManagerContainer.add(memberName);
             personneManagerContainer.add(memberFirstName);
@@ -116,6 +118,7 @@ public class PersonneManager extends JDialog implements ActionListener {
             personneManagerContainer.add(memberClubs);
             personneManagerContainer.add(update);
             personneManagerContainer.add(delete);
+//            personneManagerContainer.add(new JScrollPane(personneManagerContainer));
         }
     }
 
@@ -136,7 +139,14 @@ public class PersonneManager extends JDialog implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
         if (e.getSource().equals(creer)) new CreateMember(this);
-        System.out.println(e.getActionCommand());
+
+        if (e.getSource() instanceof ValuedButton) {
+            Personne member = (Personne) ((ValuedButton) e.getSource()).getValue();
+            if (((ValuedButton) e.getSource()).getActionCommand().equals("delete"))
+                client.request("delete", member);
+            else new CreateMember(this, member);
+        }
     }
 }

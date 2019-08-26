@@ -15,12 +15,15 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CreateMember extends JDialog implements ActionListener, ListSelectionListener {
 
     private Client client;
 
     private Container createMember;
+
+    private Personne member = null;
 
     private JButton cancel = new JButton("Annuler");
     private JButton create = new JButton("Créer");
@@ -47,7 +50,21 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
 
     CreateMember(PersonneManager personneManager) {
         super(personneManager, "Création du membre", true);
-//        setResizable(true);
+        create();
+        addElements();
+        this.setVisible(true);
+    }
+
+    CreateMember(PersonneManager personneManager, Personne member) {
+        super(personneManager, "Création du membre", true);
+        this.member = member;
+        create();
+        update(member);
+        addElements();
+        this.setVisible(true);
+    }
+
+    public void create() {
 
         client = new Client();
 
@@ -67,10 +84,26 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
         HashMap<String, Club> originClubs = (HashMap<String, Club>) client.request("clubs", "clubs");
         clubsNamesList = new ArrayList<>(originClubs.keySet());
         clubsList = new JList(clubsNamesList.toArray());
+    }
 
-        addElements();
+    private void update(Personne member) {
+        name = new TextField(member.getNom());
+        firstName = new TextField(member.getPrenom());
+        age = new TextField(String.valueOf(member.getAge()));
 
-        this.setVisible(true);
+        for (Map.Entry<String, Sport> sport : member.getSports().entrySet()) {
+            memberSportsNamesList.add(sport.getValue().getNom());
+            sportsNamesList.remove(sport.getValue().getNom());
+            sportsList = new JList(sportsNamesList.toArray());
+            memberSportsList = new JList(memberSportsNamesList.toArray());
+        }
+
+        for (Map.Entry<String, Club> club : member.getClubs().entrySet()) {
+            memberClubsNamesList.add(club.getValue().getNom());
+            clubsNamesList.remove(club.getValue().getNom());
+            clubsList = new JList(clubsNamesList.toArray());
+            memberClubsList = new JList(memberClubsNamesList.toArray());
+        }
     }
 
     private void addElements() {
@@ -143,6 +176,7 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
 
         // create
         if (e.getSource().equals(create)) {
+            int memberId = member == null ? 0 : member.getId();
             String memberName = name.getText().isEmpty() ? null : name.getText();
             String memberFirstName = firstName.getText().isEmpty() ? null : firstName.getText();
             int memberAge;
@@ -152,8 +186,8 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
                 memberAge = 0;
             }
 
-            if (memberName != null && memberFirstName != null && memberAge != 0) {
-                Personne personne = new Personne(0, memberName, memberFirstName, memberAge);
+            if (memberName != null && memberFirstName != null && memberAge != 0 && !memberSportsNamesList.isEmpty() && !memberClubsNamesList.isEmpty()) {
+                Personne personne = new Personne(memberId, memberName, memberFirstName, memberAge);
 
 
                 for (String memberSport : memberSportsNamesList) {
@@ -168,7 +202,6 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
 
                 client.request("create", personne);
             }
-
         }
         // !create
     }
