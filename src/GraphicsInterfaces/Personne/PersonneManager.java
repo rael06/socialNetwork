@@ -16,18 +16,18 @@ import java.util.Map;
 public class PersonneManager extends JDialog implements ActionListener {
 
     private JButton creer = new JButton("Créer");
-    private JLabel nom = new JLabel("nom");
-    private JLabel prenom = new JLabel("prenom");
-    private JLabel age = new JLabel("age");
-    private JLabel sports = new JLabel("sports");
-    private JLabel clubs = new JLabel("clubs");
+    private JLabel nom = new JLabel("NOM");
+    private JLabel prenom = new JLabel("PRÉNOM");
+    private JLabel age = new JLabel("AGE");
+    private JLabel sports = new JLabel("SPORTS");
+    private JLabel clubs = new JLabel("CLUBS");
 
     private Client client = new Client();
 
     private HashMap<String, Personne> members;
 
     public void setMembers() {
-        members = (HashMap<String, Personne>) client.request("personnes");
+        members = (HashMap<String, Personne>) client.request("personnes", "personnes");
     }
 
     public PersonneManager(ReseauSocialManager reseauSocialManager) {
@@ -65,8 +65,8 @@ public class PersonneManager extends JDialog implements ActionListener {
             j++;
             int x = 20, y = 30, w = 200, h = 30;
             update = new JButton("Modifier");
-            update.setActionCommand(member.getValue().getNom());
-//            update.setActionCommand(String.valueOf(member.getValue().getId()));
+//            update.setActionCommand(member.getValue().getNom());
+            update.setActionCommand(String.valueOf(member.getValue().getId()));
             update.addActionListener(this);
 
             delete = new JButton("Supprimer");

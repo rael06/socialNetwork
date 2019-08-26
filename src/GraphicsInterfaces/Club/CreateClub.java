@@ -74,7 +74,7 @@ public class CreateClub extends JDialog implements ActionListener {
         if (e.getSource().equals(create)) {
             String clubName = name.getText();
             Club club = new Club(clubName);
-            client.create(club);
+            client.request("create", club);
         }
         // !create
     }

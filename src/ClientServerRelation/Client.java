@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Client {
     private String host;
@@ -16,29 +18,25 @@ public class Client {
         port = Constants.PORT;
     }
 
-    public void create(Object object) {
-        try (
-                Socket socket = new Socket(host, port);
-                ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream())
-        ) {
-            oos.writeObject(object);
-            oos.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public Object request(String requestName) {
+    public Object request(String command, Object object) {
         try (
                 Socket socket = new Socket(host, port);
                 ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
                 ObjectInputStream ois = new ObjectInputStream(socket.getInputStream())
         ) {
-            oos.writeObject(requestName);
+            Map<String, Object> request = new HashMap<>();
+            request.put(command, object);
+            oos.writeObject(request);
             oos.flush();
-            Object o = ois.readObject();
+            Object o;
+            try {
+                o = ois.readObject();
+            } catch (Exception e) {
+                o = null;
+                e.printStackTrace();
+            }
             if (o != null) return o;
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return null;

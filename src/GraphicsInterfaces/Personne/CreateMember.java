@@ -4,7 +4,6 @@ import ClientServerRelation.Client;
 import GraphicsInterfaces.ReseauSocialManager;
 import ReseauSocial.Club;
 import ReseauSocial.Personne;
-import ReseauSocial.ReseauSocial;
 import ReseauSocial.Sport;
 
 import javax.swing.*;
@@ -20,6 +19,7 @@ import java.util.List;
 public class CreateMember extends JDialog implements ActionListener, ListSelectionListener {
 
     private Client client;
+
     private Container createMember;
 
     private JButton cancel = new JButton("Annuler");
@@ -60,11 +60,11 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
         createMember = getContentPane();
         createMember.setLayout(null);
 
-        HashMap<String, Sport> originSports = (HashMap<String, Sport>) client.request("sports");
+        HashMap<String, Sport> originSports = (HashMap<String, Sport>) client.request("sports", "sports");
         sportsNamesList = new ArrayList<>(originSports.keySet());
         sportsList = new JList(sportsNamesList.toArray());
 
-        HashMap<String, Club> originClubs = (HashMap<String, Club>) client.request("clubs");
+        HashMap<String, Club> originClubs = (HashMap<String, Club>) client.request("clubs", "clubs");
         clubsNamesList = new ArrayList<>(originClubs.keySet());
         clubsList = new JList(clubsNamesList.toArray());
 
@@ -153,7 +153,7 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
             }
 
             if (memberName != null && memberFirstName != null && memberAge != 0) {
-                Personne personne = new Personne(memberName, memberFirstName, memberAge);
+                Personne personne = new Personne(0, memberName, memberFirstName, memberAge);
 
 
                 for (String memberSport : memberSportsNamesList) {
@@ -166,7 +166,7 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
                     if (club.getNom() != null) personne.setClub(club);
                 }
 
-                client.create(personne);
+                client.request("create", personne);
             }
 
         }
