@@ -21,6 +21,8 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
 
     private Client client;
 
+    private PersonneManager personneManager;
+
     private Container createMember;
 
     private Personne member = null;
@@ -50,13 +52,15 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
 
     CreateMember(PersonneManager personneManager) {
         super(personneManager, "Création du membre", true);
+        this.personneManager = personneManager;
         create();
         addElements();
         this.setVisible(true);
     }
 
     CreateMember(PersonneManager personneManager, Personne member) {
-        super(personneManager, "Création du membre", true);
+        super(personneManager, "Modification du membre", true);
+        this.personneManager = personneManager;
         this.member = member;
         create();
         update(member);
@@ -64,7 +68,7 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
         this.setVisible(true);
     }
 
-    public void create() {
+    private void create() {
 
         client = new Client();
 
@@ -191,7 +195,7 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
 
 
                 for (String memberSport : memberSportsNamesList) {
-                    Sport sport = new Sport(memberSport);
+                    Sport sport = new Sport(0, memberSport);
                     if (sport.getNom() != null) personne.setSport(sport);
                 }
 
@@ -201,9 +205,20 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
                 }
 
                 client.request("create", personne);
+                if (client.getSuccess()) {
+                    this.setVisible(false);
+                    refresh();
+                }
             }
         }
         // !create
+    }
+
+    private void refresh () {
+        personneManager.setMembers();
+        personneManager.getContentPane().removeAll();
+        personneManager.getContentPane().repaint();
+        personneManager.windowMaker();
     }
 
     @Override

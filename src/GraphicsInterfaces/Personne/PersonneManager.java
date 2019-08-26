@@ -16,6 +16,7 @@ import java.util.Map;
 
 public class PersonneManager extends JDialog implements ActionListener {
 
+    private Container personneManagerContainer;
     private JButton creer = new JButton("Créer");
     private JLabel nom = new JLabel("NOM");
     private JLabel prenom = new JLabel("PRÉNOM");
@@ -27,16 +28,13 @@ public class PersonneManager extends JDialog implements ActionListener {
 
     private HashMap<String, Personne> members;
 
-    public void setMembers() {
+    void setMembers() {
         members = (HashMap<String, Personne>) client.request("personnes", "personnes");
     }
 
     public PersonneManager(ReseauSocialManager reseauSocialManager) {
         super(reseauSocialManager, "Interface de gestion des membres", true);
         setMembers();
-        creer.addActionListener(this);
-
-//        setResizable(true);
         setBounds(
                 ReseauSocialManager.ORIG_BOUNDS[0],
                 ReseauSocialManager.ORIG_BOUNDS[1],
@@ -44,21 +42,22 @@ public class PersonneManager extends JDialog implements ActionListener {
                 ReseauSocialManager.ORIG_BOUNDS[3] + 500
         );
 
-        Container personneManagerContainer = getContentPane();
+        personneManagerContainer = getContentPane();
         personneManagerContainer.setLayout(null);
-        personneManagerContainer.add(creer);
-        personneManagerContainer.getComponent(0).setBounds(0, 0, 90, 30);
+        creer.addActionListener(this);
+        creer.setBounds(0, 0, 90, 30);
 
-        windowMaker(personneManagerContainer);
+        windowMaker();
         this.setVisible(true);
     }
 
-    private void windowMaker(Container personneManagerContainer) {
-        displayTitles(personneManagerContainer);
-        displayMembers(personneManagerContainer);
+    void windowMaker() {
+        personneManagerContainer.add(creer);
+        displayTitles();
+        displayMembers();
     }
 
-    private void displayMembers(Container personneManagerContainer) {
+    private void displayMembers() {
         JLabel memberName, memberFirstName, memberAge, memberSports, memberClubs;
         JButton update, delete;
         int j = 1;
@@ -122,7 +121,7 @@ public class PersonneManager extends JDialog implements ActionListener {
         }
     }
 
-    private void displayTitles(Container personneManagerContainer) {
+    private void displayTitles() {
         personneManagerContainer.add(nom);
         personneManagerContainer.add(prenom);
         personneManagerContainer.add(age);
@@ -144,9 +143,17 @@ public class PersonneManager extends JDialog implements ActionListener {
 
         if (e.getSource() instanceof ValuedButton) {
             Personne member = (Personne) ((ValuedButton) e.getSource()).getValue();
-            if (((ValuedButton) e.getSource()).getActionCommand().equals("delete"))
+            if (((ValuedButton) e.getSource()).getActionCommand().equals("delete")) {
                 client.request("delete", member);
-            else new CreateMember(this, member);
+            } else new CreateMember(this, member);
+            if (client.getSuccess()) refresh();
         }
+    }
+
+    private void refresh() {
+        setMembers();
+        getContentPane().removeAll();
+        getContentPane().repaint();
+        windowMaker();
     }
 }

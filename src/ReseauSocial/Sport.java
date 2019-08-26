@@ -6,14 +6,23 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Sport implements Serializable {
 
+    private int id = 0;
     private String nom;
     private Personne pers;
     private Map<String, Personne> pratiquants = new HashMap<>();
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getNom() {
         return nom;
@@ -32,6 +41,11 @@ public class Sport implements Serializable {
     }
 
     public Sport(String _nom) {
+        nom = _nom;
+    }
+
+    public Sport(int _id, String _nom) {
+        id = _id;
         nom = _nom;
     }
 
@@ -57,6 +71,7 @@ public class Sport implements Serializable {
     }
 
     private void writeObject(ObjectOutputStream out) throws IOException {
+        out.writeInt(id);
         out.writeObject(nom);
         out.writeObject(pers);
         out.writeObject(pratiquants);
@@ -64,6 +79,7 @@ public class Sport implements Serializable {
     }
 
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        id = in.readInt();
         nom = (String) in.readObject();
         Object object = in.readObject();
         pratiquants = (HashMap<String, Personne>) object;

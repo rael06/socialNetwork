@@ -12,6 +12,11 @@ import java.util.Map;
 public class Client {
     private String host;
     private int port;
+    private Boolean success;
+
+    public Boolean getSuccess() {
+        return success;
+    }
 
     public Client() {
         host = Constants.HOST;
@@ -31,6 +36,7 @@ public class Client {
             Object o;
             try {
                 o = ois.readObject();
+                if (o instanceof Boolean) success = (Boolean) o;
             } catch (Exception e) {
                 o = null;
                 e.printStackTrace();

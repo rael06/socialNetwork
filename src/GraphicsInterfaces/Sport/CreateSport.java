@@ -13,6 +13,8 @@ public class CreateSport extends JDialog implements ActionListener {
 
     private Client client;
     private Container createSport;
+    private SportManager sportManager;
+    private Sport sport = null;
 
     private JButton cancel = new JButton("Annuler");
     private JButton create = new JButton("Créer");
@@ -23,8 +25,8 @@ public class CreateSport extends JDialog implements ActionListener {
 
     CreateSport(SportManager sportManager) {
         super(sportManager, "Création du sport", true);
-//        setResizable(true);
-        client =  new Client();
+        this.sportManager = sportManager;
+        client = new Client();
         setBounds(
                 ReseauSocialManager.ORIG_BOUNDS[0],
                 ReseauSocialManager.ORIG_BOUNDS[1],
@@ -36,6 +38,33 @@ public class CreateSport extends JDialog implements ActionListener {
         addElements();
 
         this.setVisible(true);
+    }
+
+    CreateSport(SportManager sportManager, Sport sport) {
+        super(sportManager, "Modification du sport", true);
+        this.sportManager = sportManager;
+        this.sport = sport;
+        create();
+        update(sport);
+        addElements();
+
+        this.setVisible(true);
+    }
+
+    private void create() {
+        client = new Client();
+        setBounds(
+                ReseauSocialManager.ORIG_BOUNDS[0],
+                ReseauSocialManager.ORIG_BOUNDS[1],
+                ReseauSocialManager.ORIG_BOUNDS[2],
+                ReseauSocialManager.ORIG_BOUNDS[3]
+        );
+        createSport = getContentPane();
+        createSport.setLayout(null);
+    }
+
+    private void update(Sport sport) {
+        name = new TextField(sport.getNom());
     }
 
     private void addElements() {
@@ -70,11 +99,23 @@ public class CreateSport extends JDialog implements ActionListener {
 
         // create
         if (e.getSource().equals(create)) {
+            int sportId = sport == null ? 0 : sport.getId();
             String sportName = name.getText();
-            Sport sport = new Sport(sportName);
+            Sport sport = new Sport(sportId, sportName);
             client.request("create", sport);
+            if (client.getSuccess()) {
+                this.setVisible(false);
+                refresh();
+            }
         }
         // !create
+    }
+
+    private void refresh() {
+        sportManager.setSports();
+        sportManager.getContentPane().removeAll();
+        sportManager.getContentPane().repaint();
+        sportManager.windowMaker();
     }
 }
 
