@@ -11,13 +11,13 @@ import java.awt.event.ActionListener;
 
 public class CreateSport extends JDialog implements ActionListener {
 
-    private Client client;
+    private Client client = new Client();
     private Container createSport;
     private SportManager sportManager;
     private Sport sport = null;
 
     private JButton cancel = new JButton("Annuler");
-    private JButton create = new JButton("Créer");
+    private JButton create = new JButton("Valider");
 
     private Label nameLabel = new Label("Nom");
 
@@ -26,7 +26,6 @@ public class CreateSport extends JDialog implements ActionListener {
     CreateSport(SportManager sportManager) {
         super(sportManager, "Création du sport", true);
         this.sportManager = sportManager;
-        client = new Client();
         setBounds(
                 ReseauSocialManager.ORIG_BOUNDS[0],
                 ReseauSocialManager.ORIG_BOUNDS[1],

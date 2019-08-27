@@ -12,8 +12,13 @@ import java.util.Set;
 
 public class Club implements Serializable {
 
+    private int id;
     private String nom;
     private HashMap<String, Personne> adherents = new HashMap<>();
+
+    public int getId() {
+        return id;
+    }
 
     public String getNom() {
         return nom;
@@ -21,6 +26,11 @@ public class Club implements Serializable {
 
     public void setNom(String nom) {
         this.nom = nom;
+    }
+
+    public Club(int _id, String _nom) {
+        id = _id;
+        nom = _nom;
     }
 
     public Club(String _nom) {
@@ -87,12 +97,14 @@ public class Club implements Serializable {
     }
 
     private void writeObject(ObjectOutputStream out) throws IOException {
+        out.writeInt(id);
         out.writeObject(nom);
         out.writeObject(adherents);
         out.flush();
     }
 
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        id = in.readInt();
         nom = (String) in.readObject();
         adherents = (HashMap<String, Personne>) in.readObject();
     }

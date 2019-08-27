@@ -25,7 +25,7 @@ public class SportManager extends JDialog implements ActionListener {
     private JButton creer = new JButton("Créer");
     private JLabel sportsLabel = new JLabel("Sports");
 
-    public void setSports() {
+    void setSports() {
         sports = (HashMap<String, Sport>) client.request("sports", "sports");
     }
 

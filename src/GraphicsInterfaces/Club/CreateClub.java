@@ -1,7 +1,6 @@
 package GraphicsInterfaces.Club;
 
 import ClientServerRelation.Client;
-//import GraphicsInterfaces.ClientRelation;
 import GraphicsInterfaces.ReseauSocialManager;
 import ReseauSocial.Club;
 
@@ -13,20 +12,20 @@ import java.awt.event.ActionListener;
 public class CreateClub extends JDialog implements ActionListener {
 
     private Client client = new Client();
-
     private Container createClub;
+    private ClubManager clubManager;
+    private Club club = null;
 
     private JButton cancel = new JButton("Annuler");
-    private JButton create = new JButton("Créer");
+    private JButton create = new JButton("Valider");
 
     private Label nameLabel = new Label("Nom");
 
     private TextField name = new TextField();
 
     CreateClub(ClubManager clubManager) {
-//        super().super(clubManager, "Création du club", true);
         super(clubManager, "Création du club", true);
-//        setResizable(true);
+        this.clubManager = clubManager;
         setBounds(
                 ReseauSocialManager.ORIG_BOUNDS[0],
                 ReseauSocialManager.ORIG_BOUNDS[1],
@@ -35,6 +34,17 @@ public class CreateClub extends JDialog implements ActionListener {
         );
         createClub = getContentPane();
         createClub.setLayout(null);
+        addElements();
+
+        this.setVisible(true);
+    }
+
+    CreateClub(ClubManager clubManager, Club club) {
+        super(clubManager, "Modification du club", true);
+        this.clubManager = clubManager;
+        this.club = club;
+        create();
+        update(club);
         addElements();
 
         this.setVisible(true);
@@ -66,17 +76,45 @@ public class CreateClub extends JDialog implements ActionListener {
         // !sport info fields
     }
 
+    private void create() {
+        client = new Client();
+        setBounds(
+                ReseauSocialManager.ORIG_BOUNDS[0],
+                ReseauSocialManager.ORIG_BOUNDS[1],
+                ReseauSocialManager.ORIG_BOUNDS[2],
+                ReseauSocialManager.ORIG_BOUNDS[3]
+        );
+        createClub = getContentPane();
+        createClub.setLayout(null);
+    }
+
+    private void update(Club club) {
+        name = new TextField(club.getNom());
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(cancel)) this.setVisible(false);
 
         // create
         if (e.getSource().equals(create)) {
+            int clubId = club == null ? 0 : club.getId();
             String clubName = name.getText();
-            Club club = new Club(clubName);
+            Club club = new Club(clubId, clubName);
             client.request("create", club);
+            if (client.getSuccess()) {
+                this.setVisible(false);
+                refresh();
+            }
         }
         // !create
+    }
+
+    private void refresh() {
+        clubManager.setClubs();
+        clubManager.getContentPane().removeAll();
+        clubManager.getContentPane().repaint();
+        clubManager.windowMaker();
     }
 }
 
