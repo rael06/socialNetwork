@@ -145,8 +145,8 @@ public class PersonneManager extends JDialog implements ActionListener {
             Personne member = (Personne) ((ValuedButton) e.getSource()).getValue();
             if (((ValuedButton) e.getSource()).getActionCommand().equals("delete")) {
                 client.request("delete", member);
+                if (client.getSuccess()) refresh();
             } else new CreateMember(this, member);
-            if (client.getSuccess()) refresh();
         }
     }
 

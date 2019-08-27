@@ -34,15 +34,10 @@ public class Client {
             oos.writeObject(request);
             oos.flush();
             Object o;
-            try {
-                o = ois.readObject();
-                if (o instanceof Boolean) success = (Boolean) o;
-            } catch (Exception e) {
-                o = null;
-                e.printStackTrace();
-            }
+            o = ois.readObject();
+            success = o instanceof Boolean ? (Boolean) o : null;
             if (o != null) return o;
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return null;

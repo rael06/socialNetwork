@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class CreateMember extends JDialog implements ActionListener, ListSelectionListener {
 
-    private Client client;
+    private Client client = new Client();
 
     private PersonneManager personneManager;
 
@@ -69,9 +69,6 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
     }
 
     private void create() {
-
-        client = new Client();
-
         setBounds(
                 ReseauSocialManager.ORIG_BOUNDS[0],
                 ReseauSocialManager.ORIG_BOUNDS[1],
@@ -195,7 +192,7 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
 
 
                 for (String memberSport : memberSportsNamesList) {
-                    Sport sport = new Sport(0, memberSport);
+                    Sport sport = new Sport(memberSport);
                     if (sport.getNom() != null) personne.setSport(sport);
                 }
 
