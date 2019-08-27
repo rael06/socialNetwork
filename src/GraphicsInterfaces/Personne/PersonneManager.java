@@ -1,6 +1,7 @@
 package GraphicsInterfaces.Personne;
 
 import ClientServerRelation.Client;
+import Constants.Constants;
 import GraphicsInterfaces.ReseauSocialManager;
 import GraphicsInterfaces.ValuedButton;
 import ReseauSocial.Club;
@@ -35,17 +36,12 @@ public class PersonneManager extends JDialog implements ActionListener {
     public PersonneManager(ReseauSocialManager reseauSocialManager) {
         super(reseauSocialManager, "Interface de gestion des membres", true);
         setMembers();
-        setBounds(
-                ReseauSocialManager.ORIG_BOUNDS[0],
-                ReseauSocialManager.ORIG_BOUNDS[1],
-                ReseauSocialManager.ORIG_BOUNDS[2] + 1000,
-                ReseauSocialManager.ORIG_BOUNDS[3] + 500
-        );
+        setBounds(50, 100, 1422, 600);
 
         personneManagerContainer = getContentPane();
         personneManagerContainer.setLayout(null);
         creer.addActionListener(this);
-        creer.setBounds(0, 0, 90, 30);
+        creer.setBounds(661, 0, 100, 25);
 
         windowMaker();
         this.setVisible(true);
@@ -57,13 +53,32 @@ public class PersonneManager extends JDialog implements ActionListener {
         displayMembers();
     }
 
+    private void displayTitles() {
+        personneManagerContainer.add(nom);
+        personneManagerContainer.add(prenom);
+        personneManagerContainer.add(age);
+        personneManagerContainer.add(sports);
+        personneManagerContainer.add(clubs);
+
+        for (int i = 0; i < personneManagerContainer.getComponentCount(); i++) {
+            if (i > 0) {
+                personneManagerContainer.getComponent(i)
+                        .setBounds(20 + 200 * (i - 1), 30, 200, 30);
+            }
+        }
+    }
+
     private void displayMembers() {
+
+        JPanel container = new JPanel();
+        container.setLayout(null);
+
         JLabel memberName, memberFirstName, memberAge, memberSports, memberClubs;
         JButton update, delete;
-        int j = 1;
+        int j = 0;
 
         for (Map.Entry<String, Personne> member : members.entrySet()) {
-            j++;
+            JPanel memberContainer = new JPanel();
             int x = 20, y = 30, w = 200, h = 30;
             update = new ValuedButton("Modifier", member.getValue());
             update.setActionCommand("update");
@@ -102,38 +117,32 @@ public class PersonneManager extends JDialog implements ActionListener {
             }
             memberClubs = new JLabel(String.valueOf(memberClubsString));
 
-            memberName.setBounds(x, y * j, w, h);
-            memberFirstName.setBounds(x + w, y * j, w, h);
-            memberAge.setBounds(x + w * 2, y * j, w, h);
-            memberSports.setBounds(x + w * 3, y * j, w, h);
-            memberClubs.setBounds(x + w * 4, y * j, w, h);
-            update.setBounds(x + w * 5, y * j, w - 30, h);
-            delete.setBounds(x + w * 6, y * j, w - 30, h);
+            memberContainer.setLayout(null);
+            memberContainer.setBounds(20, h * j, 200 * 7, 30);
 
-            personneManagerContainer.add(memberName);
-            personneManagerContainer.add(memberFirstName);
-            personneManagerContainer.add(memberAge);
-            personneManagerContainer.add(memberSports);
-            personneManagerContainer.add(memberClubs);
-            personneManagerContainer.add(update);
-            personneManagerContainer.add(delete);
-//            personneManagerContainer.add(new JScrollPane(personneManagerContainer));
+            memberName.setBounds(0, 0, w, h);
+            memberFirstName.setBounds(w, 0, w, h);
+            memberAge.setBounds(w * 2, 0, w, h);
+            memberSports.setBounds(w * 3, 0, w, h);
+            memberClubs.setBounds(w * 4, 0, w, h);
+            update.setBounds(w * 5, 0, w - 30, h);
+            delete.setBounds(w * 6, 0, w - 30, h);
+
+            memberContainer.add(memberName);
+            memberContainer.add(memberFirstName);
+            memberContainer.add(memberAge);
+            memberContainer.add(memberSports);
+            memberContainer.add(memberClubs);
+            memberContainer.add(update);
+            memberContainer.add(delete);
+            container.add(memberContainer);
+            j++;
         }
-    }
-
-    private void displayTitles() {
-        personneManagerContainer.add(nom);
-        personneManagerContainer.add(prenom);
-        personneManagerContainer.add(age);
-        personneManagerContainer.add(sports);
-        personneManagerContainer.add(clubs);
-
-        for (int i = 0; i < personneManagerContainer.getComponentCount(); i++) {
-            if (i > 0) {
-                personneManagerContainer.getComponent(i)
-                        .setBounds(20 + 200 * (i - 1), 30, 200, 30);
-            }
-        }
+        container.setPreferredSize(new Dimension(1400, j * 30));
+        JScrollPane scroll = new JScrollPane(container, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        int scrollHeight = j * 30 <= 500 ? j * 30 : 100;
+        scroll.setBounds(0, 70, 1408, scrollHeight + 3);
+        personneManagerContainer.add(scroll);
     }
 
     @Override
