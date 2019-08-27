@@ -70,6 +70,7 @@ public class PersonneManager extends JDialog implements ActionListener {
     }
 
     private void displayMembers() {
+
         container.removeAll();
         container.setLayout(null);
 
