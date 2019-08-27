@@ -1,7 +1,6 @@
 package GraphicsInterfaces.Personne;
 
 import ClientServerRelation.Client;
-import Constants.Constants;
 import GraphicsInterfaces.ReseauSocialManager;
 import GraphicsInterfaces.ValuedButton;
 import ReseauSocial.Club;
@@ -18,6 +17,8 @@ import java.util.Map;
 public class PersonneManager extends JDialog implements ActionListener {
 
     private Container personneManagerContainer;
+    private JScrollPane scroll = new JScrollPane(null, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    private JPanel container = new JPanel();
     private JButton creer = new JButton("Créer");
     private JLabel nom = new JLabel("NOM");
     private JLabel prenom = new JLabel("PRÉNOM");
@@ -36,7 +37,7 @@ public class PersonneManager extends JDialog implements ActionListener {
     public PersonneManager(ReseauSocialManager reseauSocialManager) {
         super(reseauSocialManager, "Interface de gestion des membres", true);
         setMembers();
-        setBounds(50, 100, 1422, 600);
+        setBounds(50, 100, 1423, 600);
 
         personneManagerContainer = getContentPane();
         personneManagerContainer.setLayout(null);
@@ -69,8 +70,7 @@ public class PersonneManager extends JDialog implements ActionListener {
     }
 
     private void displayMembers() {
-
-        JPanel container = new JPanel();
+        container.removeAll();
         container.setLayout(null);
 
         JLabel memberName, memberFirstName, memberAge, memberSports, memberClubs;
@@ -139,7 +139,7 @@ public class PersonneManager extends JDialog implements ActionListener {
             j++;
         }
         container.setPreferredSize(new Dimension(1400, j * 30));
-        JScrollPane scroll = new JScrollPane(container, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scroll.setViewportView(container);
         int scrollHeight = j * 30 <= 500 ? j * 30 : 100;
         scroll.setBounds(0, 70, 1408, scrollHeight + 3);
         personneManagerContainer.add(scroll);
@@ -161,6 +161,7 @@ public class PersonneManager extends JDialog implements ActionListener {
 
     private void refresh() {
         setMembers();
+        container.removeAll();
         getContentPane().removeAll();
         getContentPane().repaint();
         windowMaker();
