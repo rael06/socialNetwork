@@ -1,8 +1,7 @@
 import GraphicsInterfaces.ReseauSocialManager;
 import ReseauSocial.ReseauSocial;
 
-public class Main {
-
+public class Main2 {
     public static void main(String[] args) {
 
         ReseauSocialManager reseauSocialManager = new ReseauSocialManager();
@@ -10,5 +9,4 @@ public class Main {
         ReseauSocial reseauSocial = new ReseauSocial();
 
     }
-
 }
