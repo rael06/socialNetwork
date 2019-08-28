@@ -128,6 +128,8 @@ public class PersonneManager extends JDialog implements ActionListener {
             memberClubs.setBounds(w * 4, 0, w, h);
             update.setBounds(w * 5, 0, w - 30, h);
             delete.setBounds(w * 6, 0, w - 30, h);
+            update.setForeground(Color.blue);
+            delete.setForeground(Color.red);
 
             lineContainer.add(memberName);
             lineContainer.add(memberFirstName);

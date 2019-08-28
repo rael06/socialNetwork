@@ -80,6 +80,8 @@ public class SportManager extends JDialog implements ActionListener {
             sportName.setBounds(0, 0, w, h);
             update.setBounds(w, 0, w - 60, h);
             delete.setBounds(w * 2, 0, w - 60, h);
+            update.setForeground(Color.blue);
+            delete.setForeground(Color.red);
 
             lineContainer.add(sportName);
             lineContainer.add(update);

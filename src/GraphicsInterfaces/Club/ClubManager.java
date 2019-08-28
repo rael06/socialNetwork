@@ -81,6 +81,8 @@ public class ClubManager extends JDialog implements ActionListener {
             clubName.setBounds(x, 0, w, h);
             update.setBounds(x + w, 0, w - 60, h);
             delete.setBounds(x + w * 2, 0, w - 60, h);
+            update.setForeground(Color.blue);
+            delete.setForeground(Color.red);
 
             lineContainer.add(clubName);
             lineContainer.add(update);
