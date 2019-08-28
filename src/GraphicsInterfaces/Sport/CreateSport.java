@@ -1,7 +1,6 @@
 package GraphicsInterfaces.Sport;
 
 import ClientServerRelation.Client;
-import GraphicsInterfaces.ReseauSocialManager;
 import ReseauSocial.Sport;
 
 import javax.swing.*;
