@@ -91,7 +91,7 @@ public class ClubManager extends JDialog implements ActionListener {
         }
         container.setPreferredSize(new Dimension(600, j * 30));
         scroll.setViewportView(container);
-        int scrollHeight = j * 30 <= 400 ? j * 30 : 100;
+        int scrollHeight = j * 30 <= 400 ? j * 30 : 400;
         scroll.setBounds(0, 70, 608, scrollHeight + 3);
         managerContainer.add(scroll);
     }
