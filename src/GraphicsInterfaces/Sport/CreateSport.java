@@ -26,14 +26,7 @@ public class CreateSport extends JDialog implements ActionListener {
     CreateSport(SportManager sportManager) {
         super(sportManager, "Création du sport", true);
         this.sportManager = sportManager;
-        setBounds(
-                ReseauSocialManager.ORIG_BOUNDS[0],
-                ReseauSocialManager.ORIG_BOUNDS[1],
-                ReseauSocialManager.ORIG_BOUNDS[2],
-                ReseauSocialManager.ORIG_BOUNDS[3]
-        );
-        createSport = getContentPane();
-        createSport.setLayout(null);
+        create();
         addElements();
 
         this.setVisible(true);
@@ -52,12 +45,7 @@ public class CreateSport extends JDialog implements ActionListener {
 
     private void create() {
         client = new Client();
-        setBounds(
-                ReseauSocialManager.ORIG_BOUNDS[0],
-                ReseauSocialManager.ORIG_BOUNDS[1],
-                ReseauSocialManager.ORIG_BOUNDS[2],
-                ReseauSocialManager.ORIG_BOUNDS[3]
-        );
+        setBounds(50, 100, 300, 200);
         createSport = getContentPane();
         createSport.setLayout(null);
     }
@@ -68,10 +56,10 @@ public class CreateSport extends JDialog implements ActionListener {
 
     private void addElements() {
         // First element basic bounds
-        int x = 20, y = 30, w = 150, h = 20;
+        int x = 20, y = 30, w = 50, h = 20;
 
         // Button basic bounds
-        int xb = this.getWidth() / 2, yb = this.getHeight() - 100, wb = 80, hb = 20;
+        int xb = this.getWidth() / 2, yb = this.getHeight() - 80, wb = 80, hb = 20;
 
         // Buttons
         cancel.addActionListener(this);
@@ -87,7 +75,7 @@ public class CreateSport extends JDialog implements ActionListener {
         nameLabel.setBounds(x, y, w, h);
         createSport.add(nameLabel);
 
-        name.setBounds(x + w, y, w, h);
+        name.setBounds(x + w, y, w + 150, h);
         createSport.add(name);
         // !sport info fields
     }

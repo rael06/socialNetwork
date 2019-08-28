@@ -28,7 +28,7 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
     private Personne member = null;
 
     private JButton cancel = new JButton("Annuler");
-    private JButton create = new JButton("Créer");
+    private JButton create = new JButton("Valider");
 
     private Label nameLabel = new Label("Nom");
     private Label firstNameLabel = new Label("Prénom");

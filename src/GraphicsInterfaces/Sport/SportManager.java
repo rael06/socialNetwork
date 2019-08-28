@@ -1,11 +1,8 @@
 package GraphicsInterfaces.Sport;
 
 import ClientServerRelation.Client;
-import GraphicsInterfaces.Personne.CreateMember;
 import GraphicsInterfaces.ReseauSocialManager;
 import GraphicsInterfaces.ValuedButton;
-import ReseauSocial.Club;
-import ReseauSocial.Personne;
 import ReseauSocial.Sport;
 
 import javax.swing.*;
@@ -21,9 +18,11 @@ public class SportManager extends JDialog implements ActionListener {
 
     private Client client = new Client();
 
-    private Container sportManagerContainer;
+    private Container managerContainer;
+    private JScrollPane scroll = new JScrollPane(null, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    private JPanel container = new JPanel();
     private JButton creer = new JButton("Créer");
-    private JLabel sportsLabel = new JLabel("Sports");
+    private JLabel sportsLabel = new JLabel("SPORTS");
 
     void setSports() {
         sports = (HashMap<String, Sport>) client.request("sports", "sports");
@@ -32,20 +31,15 @@ public class SportManager extends JDialog implements ActionListener {
     public SportManager(ReseauSocialManager reseauSocialManager) {
         super(reseauSocialManager, "Interface de gestion des sports", true);
         setSports();
-        setBounds(
-                ReseauSocialManager.ORIG_BOUNDS[0],
-                ReseauSocialManager.ORIG_BOUNDS[1],
-                ReseauSocialManager.ORIG_BOUNDS[2] - 100,
-                ReseauSocialManager.ORIG_BOUNDS[3] + 500
-        );
+        setBounds(50, 100, 623, 500);
 
-        sportManagerContainer = getContentPane();
-        sportManagerContainer.setLayout(null);
+        managerContainer = getContentPane();
+        managerContainer.setLayout(null);
 
         creer.addActionListener(this);
-        creer.setBounds(0, 0, 90, 30);
+        creer.setBounds(250, 0, 100, 30);
 
-        sportsLabel.setBounds(230, 20, 100, 30);
+        sportsLabel.setBounds(275, 30, 100, 30);
 
         windowMaker();
 
@@ -53,18 +47,23 @@ public class SportManager extends JDialog implements ActionListener {
     }
 
     void windowMaker() {
-        sportManagerContainer.add(creer);
-        sportManagerContainer.add(sportsLabel);
+        managerContainer.add(creer);
+        managerContainer.add(sportsLabel);
         displaySports();
     }
 
     private void displaySports() {
+
+        container.removeAll();
+        container.setLayout(null);
+
         JLabel sportName;
         JButton update, delete;
-        int j = 1;
+        int j = 0;
 
         for (Map.Entry<String, Sport> sport : sports.entrySet()) {
-            j++;
+            JPanel lineContainer = new JPanel();
+
             int x = 20, y = 30, w = 200, h = 30;
             update = new ValuedButton("Modifier", sport.getValue());
             update.setActionCommand("update");
@@ -76,15 +75,33 @@ public class SportManager extends JDialog implements ActionListener {
 
             sportName = new JLabel(sport.getValue().getNom());
 
-            sportName.setBounds(x, y * j, w, h);
-            update.setBounds(x + w, y * j, w - 60, h);
-            delete.setBounds(x + w * 2, y * j, w - 60, h);
+            lineContainer.setLayout(null);
+            lineContainer.setBounds(x, h * j, 600, 30);
 
-            sportManagerContainer.add(sportName);
-            sportManagerContainer.add(update);
-            sportManagerContainer.add(delete);
-//            personneManagerContainer.add(new JScrollPane(personneManagerContainer));
+            sportName.setBounds(0, 0, w, h);
+            update.setBounds(w, 0, w - 60, h);
+            delete.setBounds(w * 2, 0, w - 60, h);
+
+            lineContainer.add(sportName);
+            lineContainer.add(update);
+            lineContainer.add(delete);
+
+            container.add(lineContainer);
+            j++;
         }
+        container.setPreferredSize(new Dimension(600, j * 30));
+        scroll.setViewportView(container);
+        int scrollHeight = j * 30 <= 400 ? j * 30 : 100;
+        scroll.setBounds(0, 70, 608, scrollHeight + 3);
+        managerContainer.add(scroll);
+    }
+
+    private void refresh() {
+        setSports();
+        container.removeAll();
+        getContentPane().removeAll();
+        getContentPane().repaint();
+        windowMaker();
     }
 
     @Override
@@ -102,12 +119,5 @@ public class SportManager extends JDialog implements ActionListener {
 
             } else new CreateSport(this, sport);
         }
-    }
-
-    private void refresh() {
-        setSports();
-        getContentPane().removeAll();
-        getContentPane().repaint();
-        windowMaker();
     }
 }

@@ -2,10 +2,8 @@ package GraphicsInterfaces.Club;
 
 import ClientServerRelation.Client;
 import GraphicsInterfaces.ReseauSocialManager;
-import GraphicsInterfaces.Sport.CreateSport;
 import GraphicsInterfaces.ValuedButton;
 import ReseauSocial.Club;
-import ReseauSocial.Sport;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,9 +18,11 @@ public class ClubManager extends JDialog implements ActionListener {
 
     private Client client = new Client();
 
-    private Container clubManagerContainer;
+    private Container managerContainer;
+    private JScrollPane scroll = new JScrollPane(null, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    private JPanel container = new JPanel();
     private JButton creer = new JButton("Créer");
-    private JLabel clubsLabel = new JLabel("Clubs");
+    private JLabel clubsLabel = new JLabel("CLUBS");
 
     void setClubs() {
         clubs = (HashMap<String, Club>) client.request("clubs", "clubs");
@@ -31,18 +31,15 @@ public class ClubManager extends JDialog implements ActionListener {
     public ClubManager(ReseauSocialManager reseauSocialManager) {
         super(reseauSocialManager, "Interface de gestion des clubs", true);
         setClubs();
-        setBounds(
-                ReseauSocialManager.ORIG_BOUNDS[0],
-                ReseauSocialManager.ORIG_BOUNDS[1],
-                ReseauSocialManager.ORIG_BOUNDS[2],
-                ReseauSocialManager.ORIG_BOUNDS[3]
-        );
+        setBounds(50, 100, 623, 500);
 
-        clubManagerContainer = getContentPane();
-        clubManagerContainer.setLayout(null);
+        managerContainer = getContentPane();
+        managerContainer.setLayout(null);
 
         creer.addActionListener(this);
-        creer.setBounds(0, 0, 90, 30);
+        creer.setBounds(250, 0, 100, 30);
+
+        clubsLabel.setBounds(280, 30, 100, 30);
 
         windowMaker();
 
@@ -50,18 +47,23 @@ public class ClubManager extends JDialog implements ActionListener {
     }
 
     void windowMaker() {
-        clubManagerContainer.add(creer);
-        clubManagerContainer.add(clubsLabel);
+        managerContainer.add(creer);
+        managerContainer.add(clubsLabel);
         displayClubs();
     }
 
     private void displayClubs() {
+
+        container.removeAll();
+        container.setLayout(null);
+
         JLabel clubName;
         JButton update, delete;
-        int j = 1;
+        int j = 0;
 
         for (Map.Entry<String, Club> club : clubs.entrySet()) {
-            j++;
+            JPanel lineContainer = new JPanel();
+
             int x = 20, y = 30, w = 200, h = 30;
             update = new ValuedButton("Modifier", club.getValue());
             update.setActionCommand("update");
@@ -73,15 +75,33 @@ public class ClubManager extends JDialog implements ActionListener {
 
             clubName = new JLabel(club.getValue().getNom());
 
-            clubName.setBounds(x, y * j, w, h);
-            update.setBounds(x + w, y * j, w - 60, h);
-            delete.setBounds(x + w * 2, y * j, w - 60, h);
+            lineContainer.setLayout(null);
+            lineContainer.setBounds(20, h * j, 600, 30);
 
-            clubManagerContainer.add(clubName);
-            clubManagerContainer.add(update);
-            clubManagerContainer.add(delete);
-//            clubManagerContainer.add(new JScrollPane(clubManagerContainer));
+            clubName.setBounds(x, 0, w, h);
+            update.setBounds(x + w, 0, w - 60, h);
+            delete.setBounds(x + w * 2, 0, w - 60, h);
+
+            lineContainer.add(clubName);
+            lineContainer.add(update);
+            lineContainer.add(delete);
+
+            container.add(lineContainer);
+            j++;
         }
+        container.setPreferredSize(new Dimension(600, j * 30));
+        scroll.setViewportView(container);
+        int scrollHeight = j * 30 <= 400 ? j * 30 : 100;
+        scroll.setBounds(0, 70, 608, scrollHeight + 3);
+        managerContainer.add(scroll);
+    }
+
+    private void refresh() {
+        setClubs();
+        container.removeAll();
+        getContentPane().removeAll();
+        getContentPane().repaint();
+        windowMaker();
     }
 
     @Override
@@ -98,12 +118,5 @@ public class ClubManager extends JDialog implements ActionListener {
 
             } else new CreateClub(this, club);
         }
-    }
-
-    private void refresh() {
-        setClubs();
-        getContentPane().removeAll();
-        getContentPane().repaint();
-        windowMaker();
     }
 }

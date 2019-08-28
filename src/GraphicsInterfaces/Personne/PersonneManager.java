@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class PersonneManager extends JDialog implements ActionListener {
 
-    private Container personneManagerContainer;
+    private Container managerContainer;
     private JScrollPane scroll = new JScrollPane(null, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     private JPanel container = new JPanel();
     private JButton creer = new JButton("Créer");
@@ -39,8 +39,8 @@ public class PersonneManager extends JDialog implements ActionListener {
         setMembers();
         setBounds(50, 100, 1423, 600);
 
-        personneManagerContainer = getContentPane();
-        personneManagerContainer.setLayout(null);
+        managerContainer = getContentPane();
+        managerContainer.setLayout(null);
         creer.addActionListener(this);
         creer.setBounds(661, 0, 100, 25);
 
@@ -49,21 +49,21 @@ public class PersonneManager extends JDialog implements ActionListener {
     }
 
     void windowMaker() {
-        personneManagerContainer.add(creer);
+        managerContainer.add(creer);
         displayTitles();
         displayMembers();
     }
 
     private void displayTitles() {
-        personneManagerContainer.add(nom);
-        personneManagerContainer.add(prenom);
-        personneManagerContainer.add(age);
-        personneManagerContainer.add(sports);
-        personneManagerContainer.add(clubs);
+        managerContainer.add(nom);
+        managerContainer.add(prenom);
+        managerContainer.add(age);
+        managerContainer.add(sports);
+        managerContainer.add(clubs);
 
-        for (int i = 0; i < personneManagerContainer.getComponentCount(); i++) {
+        for (int i = 0; i < managerContainer.getComponentCount(); i++) {
             if (i > 0) {
-                personneManagerContainer.getComponent(i)
+                managerContainer.getComponent(i)
                         .setBounds(20 + 200 * (i - 1), 30, 200, 30);
             }
         }
@@ -79,7 +79,7 @@ public class PersonneManager extends JDialog implements ActionListener {
         int j = 0;
 
         for (Map.Entry<String, Personne> member : members.entrySet()) {
-            JPanel memberContainer = new JPanel();
+            JPanel lineContainer = new JPanel();
             int x = 20, y = 30, w = 200, h = 30;
             update = new ValuedButton("Modifier", member.getValue());
             update.setActionCommand("update");
@@ -118,8 +118,8 @@ public class PersonneManager extends JDialog implements ActionListener {
             }
             memberClubs = new JLabel(String.valueOf(memberClubsString));
 
-            memberContainer.setLayout(null);
-            memberContainer.setBounds(20, h * j, 200 * 7, 30);
+            lineContainer.setLayout(null);
+            lineContainer.setBounds(x, h * j, 200 * 7, 30);
 
             memberName.setBounds(0, 0, w, h);
             memberFirstName.setBounds(w, 0, w, h);
@@ -129,21 +129,29 @@ public class PersonneManager extends JDialog implements ActionListener {
             update.setBounds(w * 5, 0, w - 30, h);
             delete.setBounds(w * 6, 0, w - 30, h);
 
-            memberContainer.add(memberName);
-            memberContainer.add(memberFirstName);
-            memberContainer.add(memberAge);
-            memberContainer.add(memberSports);
-            memberContainer.add(memberClubs);
-            memberContainer.add(update);
-            memberContainer.add(delete);
-            container.add(memberContainer);
+            lineContainer.add(memberName);
+            lineContainer.add(memberFirstName);
+            lineContainer.add(memberAge);
+            lineContainer.add(memberSports);
+            lineContainer.add(memberClubs);
+            lineContainer.add(update);
+            lineContainer.add(delete);
+            container.add(lineContainer);
             j++;
         }
         container.setPreferredSize(new Dimension(1400, j * 30));
         scroll.setViewportView(container);
         int scrollHeight = j * 30 <= 500 ? j * 30 : 100;
         scroll.setBounds(0, 70, 1408, scrollHeight + 3);
-        personneManagerContainer.add(scroll);
+        managerContainer.add(scroll);
+    }
+
+    private void refresh() {
+        setMembers();
+        container.removeAll();
+        getContentPane().removeAll();
+        getContentPane().repaint();
+        windowMaker();
     }
 
     @Override
@@ -158,13 +166,5 @@ public class PersonneManager extends JDialog implements ActionListener {
                 if (client.getSuccess()) refresh();
             } else new CreateMember(this, member);
         }
-    }
-
-    private void refresh() {
-        setMembers();
-        container.removeAll();
-        getContentPane().removeAll();
-        getContentPane().repaint();
-        windowMaker();
     }
 }
