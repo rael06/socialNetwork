@@ -144,6 +144,7 @@ public class PersonneManager extends JDialog implements ActionListener {
         int scrollHeight = j * 30 <= 500 ? j * 30 : 500;
         scroll.setBounds(0, 70, 1408, scrollHeight + 3);
         managerContainer.add(scroll);
+        scroll.revalidate();
     }
 
     private void refresh() {
