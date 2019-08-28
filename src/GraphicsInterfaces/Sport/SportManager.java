@@ -72,7 +72,8 @@ public class SportManager extends JDialog implements ActionListener {
             delete.setActionCommand("delete");
             delete.addActionListener(this);
 
-            sportName = new JLabel(sport.getValue().getNom());
+            sportName = new JLabel(String.valueOf(sport.getValue().getNom().charAt(0)).toUpperCase() +
+                    sport.getValue().getNom().substring(1));
 
             lineContainer.setLayout(null);
             lineContainer.setBounds(x, h * j, 600, 30);

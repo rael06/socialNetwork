@@ -73,7 +73,8 @@ public class ClubManager extends JDialog implements ActionListener {
             delete.setActionCommand("delete");
             delete.addActionListener(this);
 
-            clubName = new JLabel(club.getValue().getNom());
+            clubName = new JLabel(String.valueOf(club.getValue().getNom().charAt(0)).toUpperCase() +
+                    club.getValue().getNom().substring(1));
 
             lineContainer.setLayout(null);
             lineContainer.setBounds(20, h * j, 600, 30);

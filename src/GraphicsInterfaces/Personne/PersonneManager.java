@@ -98,6 +98,12 @@ public class PersonneManager extends JDialog implements ActionListener {
             int i = 0;
             for (Map.Entry<String, Sport> sport : member.getValue().getSports().entrySet()) {
                 i++;
+                if (i == 1) {
+                    memberSportsString.append(String.valueOf(sport.getValue().getNom().charAt(0)).toUpperCase())
+                            .append(sport.getValue().getNom().substring(1))
+                            .append(", ");
+                    continue;
+                }
                 if (i < member.getValue().getSports().entrySet().size()) {
                     memberSportsString.append(sport.getValue().getNom()).append(", ");
                 } else {
@@ -110,6 +116,12 @@ public class PersonneManager extends JDialog implements ActionListener {
             i = 0;
             for (Map.Entry<String, Club> club : member.getValue().getClubs().entrySet()) {
                 i++;
+                if (i == 1) {
+                    memberClubsString.append(String.valueOf(club.getValue().getNom().charAt(0)).toUpperCase())
+                            .append(club.getValue().getNom().substring(1))
+                            .append(", ");
+                    continue;
+                }
                 if (i < member.getValue().getClubs().entrySet().size()) {
                     memberClubsString.append(club.getValue().getNom()).append(", ");
                 } else {
