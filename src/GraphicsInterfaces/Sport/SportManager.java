@@ -53,7 +53,6 @@ public class SportManager extends JDialog implements ActionListener {
     }
 
     private void displaySports() {
-
         container.removeAll();
         container.setLayout(null);
 
@@ -98,7 +97,6 @@ public class SportManager extends JDialog implements ActionListener {
 
     private void refresh() {
         setSports();
-        container.removeAll();
         getContentPane().removeAll();
         getContentPane().repaint();
         windowMaker();

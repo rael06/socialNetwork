@@ -98,7 +98,6 @@ public class ClubManager extends JDialog implements ActionListener {
 
     private void refresh() {
         setClubs();
-        container.removeAll();
         getContentPane().removeAll();
         getContentPane().repaint();
         windowMaker();

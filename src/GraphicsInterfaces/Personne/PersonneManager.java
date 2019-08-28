@@ -148,7 +148,6 @@ public class PersonneManager extends JDialog implements ActionListener {
 
     private void refresh() {
         setMembers();
-        container.removeAll();
         getContentPane().removeAll();
         getContentPane().repaint();
         windowMaker();
