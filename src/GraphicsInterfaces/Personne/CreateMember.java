@@ -35,6 +35,7 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
     private Label ageLabel = new Label("Age");
     private Label sportsLabel = new Label("Sports");
     private Label clubsLabel = new Label("Clubs");
+    private TextArea errorMessageTextArea = new TextArea();
 
     private TextField name = new TextField();
     private TextField firstName = new TextField();
@@ -123,6 +124,11 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
         create.setBounds(xb + 20, yb, wb, hb);
         createMember.add(create);
 
+        errorMessageTextArea.setBounds(xb + 50, 25, 250, 105);
+        errorMessageTextArea.setForeground(Color.red);
+        errorMessageTextArea.setVisible(false);
+        createMember.add(errorMessageTextArea);
+
         // Basic elements
         // member info fields
         nameLabel.setBounds(x, y, w, h);
@@ -177,6 +183,7 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
 
         // create
         if (e.getSource().equals(create)) {
+            String errorMessage = "";
             int memberId = member == null ? 0 : member.getId();
             String memberName = name.getText().isEmpty() ? null : name.getText();
             String memberFirstName = firstName.getText().isEmpty() ? null : firstName.getText();
@@ -187,7 +194,12 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
                 memberAge = 0;
             }
 
-            if (memberName != null && memberFirstName != null && memberAge != 0 && !memberSportsNamesList.isEmpty() && !memberClubsNamesList.isEmpty()) {
+            if (memberName == null) errorMessage += "Veuillez remplir le champs 'nom' \n";
+            if (memberFirstName == null) errorMessage += "Veuillez remplir le champs 'prénom' \n";
+            if (memberAge == 0) errorMessage += "Veuillez remplir le champs 'age' \n";
+            if (memberSportsNamesList.isEmpty()) errorMessage += "Veuillez sélectionner au moins un 'sport' \n";
+            if (memberClubsNamesList.isEmpty()) errorMessage += "Veuillez sélectionner au moins un 'club' \n";
+            if (errorMessage.equals("")) {
                 Personne personne = new Personne(memberId, memberName, memberFirstName, memberAge);
 
 
@@ -206,12 +218,17 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
                     this.setVisible(false);
                     refresh();
                 }
+            } else {
+                errorMessageTextArea.setText(errorMessage);
+                errorMessageTextArea.setVisible(true);
+                errorMessageTextArea.revalidate();
             }
+            ;
         }
         // !create
     }
 
-    private void refresh () {
+    private void refresh() {
         personneManager.setMembers();
         personneManager.getContentPane().removeAll();
         personneManager.getContentPane().repaint();
