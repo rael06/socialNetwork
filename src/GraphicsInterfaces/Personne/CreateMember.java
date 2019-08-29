@@ -196,7 +196,8 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
 
             if (memberName == null) errorMessage += "Veuillez remplir le champs 'nom' \n";
             if (memberFirstName == null) errorMessage += "Veuillez remplir le champs 'prénom' \n";
-            if (memberAge == 0) errorMessage += "Veuillez remplir le champs 'age' \n";
+            if (memberAge <= 0) errorMessage += "L'âge doit être un nombre positif \n";
+            if (memberAge >= 125 ) errorMessage += "Mazette, uhhhh, c'est vieux ça, record du monde !!! \n";
             if (memberSportsNamesList.isEmpty()) errorMessage += "Veuillez sélectionner au moins un 'sport' \n";
             if (memberClubsNamesList.isEmpty()) errorMessage += "Veuillez sélectionner au moins un 'club' \n";
             if (errorMessage.equals("")) {
