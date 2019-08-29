@@ -43,13 +43,17 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
 
     private List<String> sportsNamesList;
     private JList sportsList;
+    private JScrollPane scrollSportsList = new JScrollPane(null, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     private List<String> memberSportsNamesList = new ArrayList<>();
     private JList memberSportsList = new JList(memberSportsNamesList.toArray());
+    private JScrollPane scrollMemberSportsList = new JScrollPane(null, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
     private List<String> clubsNamesList;
     private JList clubsList;
+    private JScrollPane scrollClubsList = new JScrollPane(null, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     private List<String> memberClubsNamesList = new ArrayList<>();
     private JList memberClubsList = new JList(memberClubsNamesList.toArray());
+    private JScrollPane scrollMemberClubsList = new JScrollPane(null, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
     CreateMember(PersonneManager personneManager) {
         super(personneManager, "Création du membre", true);
@@ -154,26 +158,35 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
         sportsLabel.setBounds(x + 50, y * 3 + 50, w, h);
         createMember.add(sportsLabel);
 
-        sportsList.setBounds(x, y * 4 + 50, 130, 200);
+        sportsList.setPreferredSize(new Dimension(130, sportsNamesList.size()*18));
         sportsList.addListSelectionListener(this);
-        createMember.add(sportsList);
+        scrollSportsList.setViewportView(sportsList);
+        scrollSportsList.setBounds(x, y * 4 + 50, 130, 200);
+        createMember.add(scrollSportsList);
 
-        memberSportsList.setBounds(x + (xb - 150) - 30, y * 4 + 50, 130, 200);
+
+        memberSportsList.setPreferredSize(new Dimension(130, memberSportsNamesList.size()*18));
         memberSportsList.addListSelectionListener(this);
-        createMember.add(memberSportsList);
+        scrollMemberSportsList.setViewportView(memberSportsList);
+        scrollMemberSportsList.setBounds(x + (xb - 150) - 30, y * 4 + 50, 130, 200);
+        createMember.add(scrollMemberSportsList);
         // !sports section
 
         // club section
         clubsLabel.setBounds(x + 100 + xb, y * 3 + 50, w, h);
         createMember.add(clubsLabel);
 
-        clubsList.setBounds(xb, y * 4 + 50, 130, 200);
+        clubsList.setPreferredSize(new Dimension(130, memberSportsNamesList.size()*18));
         clubsList.addListSelectionListener(this);
-        createMember.add(clubsList);
+        scrollClubsList.setViewportView(clubsList);
+        scrollClubsList.setBounds(xb, y * 4 + 50, 130, 200);
+        createMember.add(scrollClubsList);
 
-        memberClubsList.setBounds(xb + (xb - 150) - 30, y * 4 + 50, 130, 200);
+        memberClubsList.setPreferredSize(new Dimension(130, memberSportsNamesList.size()*18));
         memberClubsList.addListSelectionListener(this);
-        createMember.add(memberClubsList);
+        scrollMemberClubsList.setViewportView(memberClubsList);
+        scrollMemberClubsList.setBounds(xb + (xb - 150) - 30, y * 4 + 50, 130, 200);
+        createMember.add(scrollMemberClubsList);
         // !club section
     }
 
@@ -197,7 +210,7 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
             if (memberName == null) errorMessage += "Veuillez remplir le champs 'nom' \n";
             if (memberFirstName == null) errorMessage += "Veuillez remplir le champs 'prénom' \n";
             if (memberAge <= 0) errorMessage += "L'âge doit être un nombre positif \n";
-            if (memberAge >= 125 ) errorMessage += "Mazette, uhhhh, c'est vieux ça, record du monde !!! \n";
+            if (memberAge >= 125) errorMessage += "Mazette, uhhhh, c'est vieux ça, record du monde !!! \n";
             if (memberSportsNamesList.isEmpty()) errorMessage += "Veuillez sélectionner au moins un 'sport' \n";
             if (memberClubsNamesList.isEmpty()) errorMessage += "Veuillez sélectionner au moins un 'club' \n";
             if (errorMessage.equals("")) {
@@ -247,6 +260,10 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
 
             sportsList.setListData(sportsNamesList.toArray());
             memberSportsList.setListData(memberSportsNamesList.toArray());
+            sportsList.setPreferredSize(new Dimension(130, sportsNamesList.size()*18));
+            scrollSportsList.revalidate();
+            memberSportsList.setPreferredSize(new Dimension(130, memberSportsNamesList.size()*18));
+            scrollMemberSportsList.revalidate();
         }
 
         if (!e.getValueIsAdjusting() && e.getSource().equals(memberSportsList)) {
@@ -255,6 +272,10 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
 
             sportsList.setListData(sportsNamesList.toArray());
             memberSportsList.setListData(memberSportsNamesList.toArray());
+            sportsList.setPreferredSize(new Dimension(130, sportsNamesList.size()*18));
+            scrollSportsList.revalidate();
+            memberSportsList.setPreferredSize(new Dimension(130, memberSportsNamesList.size()*18));
+            scrollMemberSportsList.revalidate();
         }
         // !sports
 
@@ -267,6 +288,10 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
 
             clubsList.setListData(clubsNamesList.toArray());
             memberClubsList.setListData(memberClubsNamesList.toArray());
+            clubsList.setPreferredSize(new Dimension(130, clubsNamesList.size()*18));
+            memberClubsList.revalidate();
+            memberClubsList.setPreferredSize(new Dimension(130, memberClubsNamesList.size()*18));
+            scrollMemberClubsList.revalidate();
         }
 
         if (!e.getValueIsAdjusting() && e.getSource().equals(memberClubsList)) {
@@ -275,6 +300,10 @@ public class CreateMember extends JDialog implements ActionListener, ListSelecti
 
             clubsList.setListData(clubsNamesList.toArray());
             memberClubsList.setListData(memberClubsNamesList.toArray());
+            clubsList.setPreferredSize(new Dimension(130, clubsNamesList.size()*18));
+            memberClubsList.revalidate();
+            memberClubsList.setPreferredSize(new Dimension(130, memberClubsNamesList.size()*18));
+            scrollMemberClubsList.revalidate();
         }
     }
 }
